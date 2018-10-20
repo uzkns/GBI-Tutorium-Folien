@@ -1,0 +1,165 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{amsmath}
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{$Num_k$ und $Repr_k$}
+\author{Tutorium 42, \#4}
+\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+Nach dem Tutorium wurde ich darauf hingewiesen, dass ist bei den Beispielen zu $Num_k$ und $Repr_k$ einen Fehler gemacht habe. Dieses PDF soll die beiden Vorgehensweisen noch einmal richtig und mit den selben Beispielen erklären.\\
+\ \\
+\section{$Num_k$}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Ist w ein Wort, welches eine Zahl zur Basis k darstellt (z.B. $FFF_{16}$ oder $1001_2$), so ist $Num_k(w)$ die Darstellung des Wortes / der Zahl im Dezimalsystem (Basis 10).
+
+\subsection{Definition} %%%%%%%
+
+Sei $w = w' \cdot x$.
+\begin{itemize}
+	\item $Num_k(\epsilon) = 0$
+	\item $Num_k(w' \cdot x) = k \cdot Num_k(w') + num_k(x)$, 
+	\begin{itemize}
+		\item[(!)] "$+$" steht hier für die Addition, nicht für irgendeine Konkatenation.
+	\end{itemize}
+	\item $num_k(x) = x$
+\end{itemize}
+
+
+
+\subsection{Beispiel} %%%%%%%%%%
+
+Sei $w_1 = 5_8$ (5 zur Basis 8).\\
+$Num_8(5)\\
+= 8 \cdot Num_8(\epsilon) + num_8(5)\\
+= 8 \cdot 0 + 5\\
+= 5$.\\
+\ \\
+Sei $w_2 = 234_9$ (234 zur Basis 9).\\
+$Num_9(234) \\
+= 9 \cdot Num_9(23) + num_9(4) \\
+= 9 \cdot ((9 \cdot Num_9(\epsilon 2)) + num_9(3)) + num_9(4) \\
+= 9 \cdot ( 9 \cdot (9 \cdot Num_9(\epsilon)) + num_9(2)) + num_9(3) ) + num_9(4) \\
+= 9 \cdot ((9 \cdot 2) + 3) + 4 \\
+= (9 \cdot 9 \cdot 2) + (9 \cdot 3) + 4 \\
+= 162 + 27 + 4\\
+= 193$. \\
+\ \\
+Sei $w_3 = B66_{16}$ (In Hexadezimal gilt B = 11, also  $w = 11 \cdot 6 \cdot 6$ in der Basis $16$).\\
+$Num_{16}(B66) \\
+= 16 \cdot Num_{16}(B6) + num_{16}(6) \\
+= 16 \cdot (16 \cdot Num_{16}(\epsilon B) + num_{16}(6)) + num_{16}(6) \\
+= 16 \cdot (16 \cdot (16 \cdot Num_{16}(\epsilon) num_{16}(B)) + num_{16}(6)) + num_{16}(6) \\
+= 16 \cdot (16 \cdot 11 + 6) + 6 \\
+= (16 \cdot 16 \cdot 11) + (16 \cdot 6) + 6 \\
+= 2816 + 96 + 6\\
+= 2918$ \\
+
+\section{$Repr_k$} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Während $Num_k$ von anderen Systemen in Dezimal umwandelt, ist $Repr_k$ dafür da, eine ein Wort w welches eine Zahl in dezimal darstellt in eine Zahl vom System k umzuwandeln. Um also von Hexadezimal auf binär zu kommen ist $Repr_2(Num_{16}(w))$, die Hintereinanderauführung von $Num_{k_1}$ und $Repr_{k_2}$, nötig.
+
+\subsection{Definition} %%%%%%%%%%%
+Sei $w = x_{10}$ eine Dezimalzahl die in Basis k umgerechnet werden soll.
+\begin{itemize}
+	\item Fall $x < k: repr_k(x) = x$
+	\item Fall $x \geq k: Repr_k($x div k$) \cdot repr_k(n \bmod k)$
+	\begin{itemize}
+		\item[(!)] "$\cdot$" steht hier wieder für die Konkatenation
+		\item[(!)] In den Beispielen wird anstelle von "x div k" die Darstellung $\frac{x}{k}$ genutzt. Hier soll es das selbe beschreiben, nämlich das Teilen mit Rest ($\frac{74}{10} = 7, \frac{36}{7} = 5$), in der Klausur und auf den ÜBs bitte nicht so verwenden.
+	\end{itemize}
+\end{itemize}
+
+
+\subsection{Beispiele} %%%%%%%%%%%
+$w = 29$ und $k = 3$.\\
+$ Repr_3(29) \\
+= Repr_3(\frac{29}{3}) \cdot repr_3(29 \bmod 3) \\
+= Repr_3(9) \cdot 2 \\
+= Repr_3(\frac{9}{3}) \cdot repr_3(9 \bmod 3) \cdot 2 \\
+= Repr_3(3)\cdot 0 \cdot 2 \\
+= Repr_3(1) \cdot repr_3(0) \cdot 0 \cdot 2 \\
+= repr_3(1) \cdot 0 \cdot 0 \cdot 2 \\
+= 1 \cdot 0 \cdot 0 \cdot 2 = 1002_3\\$
+\ \\
+$w = 53$ und $k = 5$.\\
+$ Repr_5(53) \\
+= Repr_5(\frac{53}{5}) \cdot repr_5(53 \bmod 5) \\
+= Repr_5(10) \cdot repr_5(3)\\
+= Repr_5(\frac{10}{5}) \cdot repr_5(10 \bmod 5) \cdot 3\\
+= Repr_5(2) \cdot 0 \cdot 3 \\
+= 2 \cdot 0 \cdot 3 = 203_5$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

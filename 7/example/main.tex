@@ -1,0 +1,234 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#7}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Grammatiken
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken}
+Kontextfreie Grammatiken sind ein Viertupel G = (N, T, S, P) mit:\\
+\ \\
+\begin{itemize}
+	\item N: Das Alphabet der Nonterminalsymbole
+	\item T: Das Alphabet der Terminalsymbole
+	\item S: dem Startsymbol (mit $S \in N$)
+	\item P: einer (endlichen) Menge an Produktionen
+\end{itemize}
+\end{frame}
+
+
+%Beispiel
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Beispiel}
+Beispiel-Viertupel:\\
+\ \\
+\begin{itemize}
+	\item $G = ( \{X, Y\}, \{a, b, c\}, X, P_1 )$
+	\item $P_1 = ( X \rightarrow aX | bY, Y \rightarrow c )$
+\end{itemize}
+\end{frame}
+
+
+%Beispiel Lösung
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Beispiel}
+Beispiel-Viertupel:\\
+\ \\
+\begin{itemize}
+	\item $G = ( \{X, Y\}, \{a, b, c\}, X, P_1 )$
+	\item $P_1 = ( X \rightarrow aX | bY, Y \rightarrow c )$
+\end{itemize}
+\ \\
+Eine mögliche Ableitung ist dann:\\
+$X \Rightarrow aX \Rightarrow aaX \Rightarrow aabY \Rightarrow aabc$ \\
+oder:\\
+$X \Rightarrow bY \Rightarrow bc$
+\end{frame}
+
+
+%Besondere Pfeile
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Pfeile}
+Einzelne Ableitung: \\
+\begin{itemize}
+	\item $ {\Rightarrow} $
+\end{itemize}
+Ableitung mit n Schritten: \\
+\begin{itemize}
+	\item $ {\Rightarrow}^n $
+\end{itemize}
+Ableitung mit bel. Schritten: \\
+\begin{itemize}
+	\item $ {\Rightarrow}^* $
+\end{itemize}
+\end{frame}
+
+
+%Sprache einer Grammatik
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Sprachen}
+Die Spache L(G) der Grammatik G ist die Menge aller Wörter die mit G abgeleitet werden können und die nur Terminalsybole enthalten.\\
+\ \\
+Im vorigen Beispiel ist $L(G) = \{ \{a\}^+ b c\}$
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Lösung}
+Gibt es eine kontextfreie Grammatik mit $L(G) = \emptyset$? Wie sieht sie aus?\\
+\ \\
+Ja, und zwar $G_{ \emptyset } = ( \{X\}, \{q\}, X, \{X \rightarrow X\})$.\\
+$G_{\emptyset}$ produziert nie ein Wort ohne Nonterminalsymbole.
+\end{frame}
+
+
+%Ableitungsbäume
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Ableitungsbäume}
+Zu einer Grammatik G kann man die Ableitungen zu einem Wort w $\in$ L(G) auch als einen Ableitungsbaum schreiben.\\
+Dieser stellt die Schritte grafisch dar und hilft bei der Darstellung einer Grammatik.
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+\frametitle{Kontextfreie Grammatiken: Lösung}
+Sei $G = \{ \{ X, Y \}, \{ a, b, c \}, X, P_2 \}$\\
+$P_2 = \{ X \rightarrow aXa | bXb | Y, Y \rightarrow cY | c \}$\\
+Ist $abccba \in L(G)$? Zeige es mit den Ableitungen und dem Ableitungsbaum.\\
+\ \\
+abcba ist in L(G), da es durch $X \Rightarrow aXa \Rightarrow abXba \Rightarrow abYba \Rightarrow abcYba \Rightarrow abccba$ abgeleitet werden kann.\\
+\ \\
+Sei $G_2 = \{ \{ S, U, X, Q \}, \{a\}, S, P_3 \}$\\
+$P_3 = \{$ 
+	$S \rightarrow aU | aXa | Qaa, $
+	$U \rightarrow aaU | \epsilon,$ 
+	$X \rightarrow Qaaa | a, $
+	$Q \rightarrow aXa | a \}$
+Leitet $a^7$ ab.\\
+\ \\
+$S \Rightarrow aU \Rightarrow aaaU \Rightarrow aaaaaU \Rightarrow aaaaaaaU \Rightarrow aaaaaaa$
+\end{frame}
+
+
+%Relationen Teil 2
+\begin{frame}
+\frametitle{Relationen: Rückblick}
+Wir kennen bereits:\\
+\ \\
+Relation R $\subseteq$ A $\times$ B, also enthält R Tupel aus der Menge A $\times$ B.\\
+Im Fall  R $\subseteq$ A $\times$ A heißt R \emph{"Relation auf A"}.\\
+\ \\
+Relationen haben 4 Eigenschaften:\\
+\begin{itemize}
+	\item Linkstotal
+	\item Rechtstotal
+	\item Linkseindeutig
+	\item Rechtseindeutig
+\end{itemize}
+\end{frame}
+
+
+%Identität
+\begin{frame}
+\frametitle{Relationen: Identität}
+Die Identität über einer Menge M ist die Relation $I_M$ oder auch die Identität.\\
+Die Identität ist die Abbildung $f(x) = x$ als Relation formuliert, sie ändert nichts an der Menge, dazu ist sie das neutrale element der Verkettung ($\circ$)\\
+\ \\
+Formal: $I_M = \{(x, x) | x \in M\}$
+\end{frame}
+
+
+%Relationen Definitionen
+\begin{frame}
+\frametitle{Relationen: Definitionen}
+Seien $R \subseteq M_1 \times M_2, S \subseteq M_2 \times M_3$ zwei Relationen.\\
+\ \\
+Produkt von Relationen:\\
+$S \circ R = \{ (x, z)  \in M_2 \times M_3 | \exists y \in M_2: (x,y) \in R \wedge (y, z) \in S \}$\\
+\ \\
+Potenz einer Relation:\\
+$R^n = R \circ R \circ  ... \circ R$, n $\in \mathbb{N}_0$-mal \\
+$R^0 = I_M$, die Identität\\
+$R^*$ ist die reflexiv-transitive Hülle von R
+\end{frame}
+
+
+%Relationen Eigenschaften
+\begin{frame}
+\frametitle{Relationen: Eigenschaften}
+Zu den schon bekannten Eigenschaften gibt es noch 3 neue Eigenschaften von Relationen:\\
+\ \\
+\begin{itemize}
+	\item reflexiv: R ist reflexiv $\Leftrightarrow I_M \subseteq R$
+	\item symmetrisch: R ist symm. $\Leftrightarrow \forall (x,y) \in R: (y,x) \in R$
+	\item transitiv: R ist transitiv $\Leftrightarrow \forall (x,y) \in R \wedge (y,z) \in R \rightarrow (x,z) \in R$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+%Relationen Aufgabe
+\begin{frame}
+\frametitle{Relationen: Lösung}
+Welche Eigenschaften haben die Relationen?\\
+\ \\
+\begin{tabular}{c|c|c|c|c}
+ & $x = y$ & $ x \le y$ & $x < y$ & $x \neq y$\\ \hline
+reflexiv & \checkmark & \checkmark & x & x \\
+symmetrisch & \checkmark & x & x & \checkmark \\
+transitiv & \checkmark & \checkmark & \checkmark & x \\
+\end{tabular}
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,270 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#2}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+%Alphabete
+\begin{frame}
+  \frametitle{Rückblick: Alphabete}
+
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Ein Alphabet ist eine \emph{endliche, nichtleere} Menge aus Zeichen / Symbolen. Was dabei ein Zeichen ist, ist nicht eingeschränkt.
+	\end{itemize}
+	\end{KITexampleblock}\\
+\ \\
+Beipielalphabete:
+\begin{enumerate}
+\item \{H, a, n, d, y\}
+\item \{Handy\}
+\item \{Ha, ndy\}
+\end{enumerate}
+Können alle "Handy" erstellen/schreiben
+\end{frame}
+
+%Worte
+\begin{frame}
+  \frametitle{Worte}
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Ein Wort w aus einem Alphabet A ist eine Folge von Zeichen aus A 
+		
+	\end{itemize}
+	\end{KITexampleblock}\\
+\ \\
+Beipielworte aus A = \{H, a, n, d, y, -, 1, 2, 3, 4 ,5, 6, 7, 8, 9, 0\}
+\begin{enumerate}
+\item Handy
+\item H1a2n3d4y5
+\item ---aa-----HH1-------
+\item 017341856397
+\end{enumerate}
+
+\end{frame}
+
+%Folgen
+\begin{frame}
+  \frametitle{Folgen}
+
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Eine Folge ist eine Auflistung von Objekten, welche fortlaufend nummeriert sind.
+	\end{itemize}
+	\end{KITexampleblock}\\
+\ \\
+Wofür brauchen wir Folgen?\\
+\ \\
+\begin{tabular}{ccccccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13\\
+G & r & u & n & d & b & e & g & r & i & f & f & e\\
+\end{tabular}\\
+\ \\
+\begin{itemize}
+\item 13tes Zeichen aus dem Wort? \emph{e}.
+\item Länge des Wortes? \emph{13}.
+\end{itemize}
+\end{frame}
+
+%Wörter als Abbildung
+\begin{frame}
+  \frametitle{Worte als Abbildungen}
+
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Ein Wort ist eine surjektive Abb. $w: \mathbb{Z}_n \rightarrow B$ mit $B \subseteq A$
+	\end{itemize}
+	\end{KITexampleblock}\\
+\ \\
+formal: w = Handy\\
+$w: \mathbb{Z}_5 \rightarrow \{H, a, n, d, y\}$\\
+mit w(0) = H, w(1) = a, w(2) = n, w(3) = d, w(4) = y
+\end{frame}
+
+%Leerzeichen
+\begin{frame}
+  \frametitle{Leerzeichen}
+
+\begin{KITalertblock}{Achtung}
+	\begin{itemize}
+		\item Ein Leerzeichen ist auch nur wieder ein Symbol. es trennt Wörter nach der Definition nicht
+	\end{itemize}
+	\end{KITalertblock}\\
+\ \\
+Beipielwort aus A = \{H, a, l, o, W, e, t, \} ist w = Hallo Welt\\
+\ \\
+\begin{itemize}
+\item Eine Folge von Zeichen
+\item Ein Wort, nicht zwei (auch wenn durch Leerzeichen getrennt)
+\item Leerzeichen manchmal auch ␣ geschrieben
+\end{itemize}
+\end{frame}
+
+
+%Leeres Wort
+\begin{frame}
+  \frametitle{Leeres Wort}
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Das leere Wort ist die Abbildung $\epsilon : \mathbb{Z}_0 \rightarrow \{ \}$
+	\end{itemize}
+	\end{KITexampleblock}\\
+\ \\
+Das leere Wort hat Länge $| \epsilon |$ = 0, da es aus 0 Zeichen besteht
+\end{frame}
+
+%Konkatenation
+\begin{frame}
+  \frametitle{Konkatenation}
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+\item $|w_1| = m$ und $|w_2| = n$
+	\item $w_1 \cdot w_2 : \mathbb{Z}_{m+n} \rightarrow A_1 \cup A_2$. $ 
+    	 i \mapsto \left\{\begin{array}{ll}
+				w_1 (i), & 0 \leq i < m \\
+         				w_2 (i-m), & m \leq i < m + n \\
+			\end{array} \right.$
+	\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+\begin{itemize}
+\item Hintereinanderschreiben von 2 Worten
+\item Gtrennt durch einen $\cdot$, kann auch weggelassen werden
+\item Zuerst die m Buchstaben des ersten Wortes, dann die n Buchstaben des zweiten Wortes
+\item leeres Wort $\epsilon$ ist neutrales Element der Konkatenation ($w \cdot \epsilon = \epsilon \cdot w = w$)
+\item Konkatenation ist nicht kommutativ, aber assoziativ
+\end{itemize}
+\end{frame}
+
+%Potenzen
+\begin{frame}
+  \frametitle{Potenzen}
+
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item A* ist die Menge aller Wörter über dem Alphabet A
+	\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item $A^n$ ist die Menge aller Wörter der Länge n über dem Alphabet A
+	\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item $w^n$ ist die n-fache Aneinanderreihung des Wortes w mit $w^0 = \epsilon$
+	\end{itemize}
+\end{KITexampleblock}
+\end{frame}
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen}
+
+Sprache: Aussprache, Stil, Satzbau, Wortwahl\\
+\ \\
+In der Informatik: Aufbau vom Befehlen, Compiler, WWW-Seiten\\
+\ \\
+\begin{KITalertblock}{Problem}
+	\begin{itemize}
+		\item Woher weiß der Computer ob das (Sprach-)Gebilde korrekt ist?
+	\end{itemize}
+\end{KITalertblock}
+\end{frame}
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen}
+
+Sprache: Aussprache, Stil, Satzbau, Wortwahl\\
+\ \\
+In der Informatik: Aufbau vom Befehlen, Compiler, WWW-Seiten\\
+\ \\
+\begin{KITinfoblock}{Lösung}
+	\begin{itemize}
+		\item Eine formelle Sprache als Teilmenge von $A^*$ definiert was richtig ist und was nicht
+	\end{itemize}
+\end{KITinfoblock}
+\end{frame}
+
+%Beispiel
+\begin{frame}
+  \frametitle{Formale Sprachen: Beispiel}
+
+A = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., -, +\}, F $\subseteq A^*$ Formalsprache der Dezimaldarstellung aller Zahlen $\in \mathbb{Q}$
+\end{frame}
+
+%Beispiel
+\begin{frame}
+  \frametitle{Formale Sprachen: Beispiel}
+
+A = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., -, +\}, F $\subseteq A^*$ Formalsprache der Dezimaldarstellung aller Zahlen $\in \mathbb{Q}$
+
+\begin{itemize}
+	\item +1234567890
+	\item 236
+	\item -310.25
+\end{itemize}
+\ \\
+\begin{itemize}
+	\item +-5
+	\item 3+
+	\item 31..
+	\item -.+.-.+.-.+.-.+.-
+\end{itemize}
+\end{frame}
+
+\end{document}

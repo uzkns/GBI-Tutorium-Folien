@@ -1,0 +1,406 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#13}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Unterschiede in Sprachen
+\begin{frame}
+  \frametitle{Sprachen}
+Es gibt Sprachen, die ein Automat entscheiden kann, z.B. $\{a^n | n \in \mathbb{N} \}$. \\
+\ \\
+Aber es gibt auch solche, die kein Automat entscheiden kann, z.B. $\{ a^n b^n | n \in \mathbb{N} \}$. \\
+Für diese Sprache müsste der Automat die unendlich hohe Anzahl der a's zählen, was in endlich vielen Zuständen nicht machbar ist.
+\end{frame}
+
+
+%Chomsky
+\begin{frame}
+  \frametitle{Sprachen}
+Es gibt demnach verschiedene Arten (oder "Klassen") von Sprachen. Diese sind sortiert nach der sog. Chomsky-Hierarchie. \\
+\ \\
+In GBI interessieren uns nur die Sprachen von Typ 2 und Typ 3 (kontextfrei und regulär). Dabei gilt jede Chomsky-Typ-3-Sprache ist auch eine Chomsky-Typ-2-Sprache, bzw. für jede reguläre Sprache existiert eine kontextfreie Grammatik.
+\end{frame}
+
+
+%Reguläre Sprachen
+\begin{frame}
+  \frametitle{Reguläre Sprachen: Grundlagen}
+Reguläre Sprachen sind also die \emph{eingeschränktesten} Sprachen von allen formalen Sprachen. \\
+\ \\
+Für eine Sprache $L$ gilt: \\
+L ist eine reguläre Sprache $\Leftrightarrow$ \\
+$L$ wird durch einen Automaten $A$ akzeptiert $\Leftrightarrow$ \\
+$\exists$ Regulärer Ausdruck $R$ der $L$ beschreibt $\Leftrightarrow$ \\
+$L$ wird von einer rechtsregulären Grammatik $G_1$ erzeugt $\vee$ $L$ wird von einer linksregulären Grammatik $G_2$ erzeugt \\
+\ \\
+Wir interessieren uns erst nur für reguläre Ausdrücke.
+\end{frame}
+
+
+%Reguläre Ausdrücke
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Grundlagen}
+Ein regulärer Ausdruck besteht aus zwei Alphabeten: $A$ und \\
+$Z = \{$
+\begin{itemize}
+	\item $| \Leftrightarrow$ "oder", zB $a|b$
+	\item $* \Leftrightarrow$ "beliebig oft", zB $a*$
+	\item $\emptyset \Leftrightarrow$ "nichts", ähnlich zu $\epsilon$
+	\item $(, ) \Leftrightarrow$ Klammern
+\end{itemize}
+$\}$ \\
+\ \\
+Atomare reguläre Ausdrücke sind dabei: $\emptyset$ und $a \in A$ \\
+Daraus lassen sich wieder Ausdrücke zusammensetzen: $(R_1 *), (R_1 | R_2), (R_1 R_2)$ falls $R_1$ und $R_2$ wieder reg. Ausdrücke sind
+\end{frame}
+
+
+%Reguläre Ausdrücke: Aufgabe
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Aufgabe}
+Sei $A = \{ a, b \}$
+\begin{tabular}{c c }
+Ausdruck & regulär (ja/nein) \\
+$((a|b)*)$ & \\
+$((\emptyset \emptyset)|a)$ & \\
+$(|aa)$ & \\
+$(*bab)$ & \\
+$(r_1 | a$ & \\
+\end{tabular}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Lösung}
+\begin{tabular}{c c c }
+Ausdruck & regulär (ja/nein) & Wieso nicht? \\
+$((a|b)*)$ & ja & - \\
+$((\emptyset \emptyset)|a)$ & ja & - \\
+$(|aa)$ & nein & vor $|$ fehlt ein Ausdruck \\
+$(*bab)$ & nein & vor $*$ fehlt ein Ausdruck \\
+$(c|a$ & nein & $r_1 \notin A$ und nicht richtig geklammert\\
+\end{tabular}
+\end{frame}
+
+
+%Klammern
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Klammereinsparung}
+Auch bei regulären Ausdrücken kann man die Klammern weglassen um den Ausdruck lesbarer zu machen. \\
+\ \\
+Die Wichtigkeit der Operationen ist: $*$ vor Konkatenation vor $|$. \\
+\ \\
+Damit entspricht $((a|(b(a*)))|(ba))$ dem Ausdruck $a|ba*|ba$.
+\end{frame}
+
+
+%Sprachen
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Sprachen}
+Wir wissen: Ein regulärer Ausdruck beschreibt eine Sprache, die auch von einem Automaten akzeptiert wird. \\
+\ \\
+Ergo können wir zu jedem Ausdruck $R$ auch die Sprache $<R>$ in bekannter Mengenschreibweise finden, die von R beschrieben wird. Ausserdem können wir dann einen Automaten erstellen, der genau $<R>$ akzeptiert.
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Aufgabe}
+Erstellt zu den Ausdrücken die jeweiligen Sprachen in Mengenschreibweise.\\
+\ \\
+\begin{itemize}
+	\item $R_1 = (a|b)* abba(a|b)*$
+	\item $R_2 = b*****$
+	\item $R_3 = abb*|ab*a$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Lösung}
+Erstellt zu den Ausdrücken die jeweiligen Sprachen in Mengenschreibweise.\\
+\ \\
+\begin{itemize}
+	\item $R_1 = (a|b)* abba(a|b)*$
+	\begin{itemize}
+		\item $\{w_1 abba w_2 | w_1 , w_2 \in \{a, b\}^* \}$
+	\end{itemize}
+	\item $R_2 = b*****$
+	\begin{itemize}
+		\item $\{ b \}^*$
+	\end{itemize}
+	\item $R_3 = abb*|ab*a$
+	\begin{itemize}
+		\item $\{ab^n | n \in \mathbb{N}_+\} \cup \{ab^m a | m \in \mathbb{N}_0\}$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Aufgabe}
+Gebt den Ausdruck für die Sprachen an.\\
+\ \\
+\begin{itemize}
+	\item Alle Wörter $w \in \{a, b\}^*$ in denen \emph{genau} zwei Mal ein $a$ vorkommt.
+	\item $\{ \}$
+	\item $\{ \epsilon \}^*$
+	\item Alle $w \in \{a, b\}^*$ in denen aba nicht vorkommt
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Lösung}
+Gebt den Ausdruck für die Sprachen an.\\
+\ \\
+\begin{itemize}
+	\item Alle Wörter $w \in \{a, b\}^*$ in denen \emph{genau} zwei Mal ein $a$ vorkommt.
+	\begin{itemize}
+		\item $(b*)a(b*)a(b*)$
+	\end{itemize}
+	\item $\{ \}$
+	\begin{itemize}
+		\item $\emptyset$
+	\end{itemize}
+	\item $\{ \epsilon \}$
+	\begin{itemize}
+		\item $\emptyset *$
+	\end{itemize}
+	\item Alle $w \in \{a, b\}^*$ in denen aba nicht vorkommt
+	\begin{itemize}
+		\item $b*(a*bbb*)*a*(b|\emptyset *)$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Aufgabe}
+Gebt den Ausdruck zum endlichen Automat/Akzeptor an.
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Aufgabe}
+Gebt den Ausdruck zum endlichen Automat/Akzeptor an. \\
+\ \\
+$(ab*a)*(bb(b)\emptyset *) | \emptyset *)$
+\end{frame}
+
+
+%Rechtsreguläre Grammatiken
+\begin{frame}
+  \frametitle{Rechtsreguläre Grammatiken: Grundlagen}
+Rechtsreguläre Grammatiken sind besondere Kontextfreie Grammatiken $G = (N, T, S, P)$, bei denen alle $p_x \in P$ so aussehen: \\
+\ \\
+\begin{itemize}
+	\item $X \rightarrow w$, $X \in N, w \in T^*$
+	\item $X \rightarrow wY$, $X, Y \in N, w \in T^*$
+\end{itemize}
+\ \\
+Zu jeder Rechtsregülären Grammatik $G$ kann man einen Ausdruck $R$ finden.
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Rechtsreguläre Grammatiken: Aufgabe}
+Gebt eine Grammatik zum Ausdruck an und umgekehrt. \\
+\ \\
+\begin{itemize}
+	\item $R_1 = a*b$
+	\item $X \rightarrow aX | b | \epsilon$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Rechtsreguläre Grammatiken: Aufgabe}
+Gebt mögliche Produktionen zum Ausdruck an und umgekehrt. \\
+\ \\
+\begin{itemize}
+	\item $a* b$
+	\begin{itemize}
+		\item $X \rightarrow aX | bY, Y \rightarrow \epsilon$
+	\end{itemize}
+	\item $X \rightarrow aX | b | \epsilon$
+	\begin{itemize}
+		\item $a* (b | \emptyset *)$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Rechtsreguläre Grammatiken: Aufgabe}
+Gebt einen endlichen Automat zur Sprache $G$ an. \\
+\ \\
+$G = \{ \{ X, Y, Z \}, \{ a, b \}, X, P \}$ \\
+$P = \{ $\\
+$X \rightarrow aX | bY | \epsilon, $ \\
+$Y \rightarrow aX | bZ | \epsilon, $ \\
+$Z \rightarrow aZ | bZ $ \\
+$\}$
+\end{frame}
+
+
+%Kantrowitsch-Bäume
+\begin{frame}
+  \frametitle{Reguläre Ausdrücke: Kantrowitsch-Bäume}
+Reguläre Ausdrücke können, wie ein Ableitungsbaum, grafisch dargestellt werden. \\
+Im Unterschied zu den Ableitungsbäumen stehen im Ausdruck alle Knoten. \\
+\ \\
+Beispielausdruck: $R_1 = (a (b | c)* ) a$.
+\end{frame}
+
+
+%Turing Maschinen
+\begin{frame}
+  \frametitle{Turing-Maschinen}
+Eine Turingmaschine ist ein Modell zur Funktionsweise eines Computers. Der Mathematiker Alan Turing erfand sie 1936 um das Entscheidungsproblem zu lösen. \\
+Eine Turingmaschine kann jeden Algorithmus simulieren und damit auch ganze Programme und Betriebssysteme. Das und ihre Formalisierung dieser Begriffe macht sie zu einem mathematischen Objekt und kann damit mit Funktionen und Methoden untersucht werden. (dazu mehr in TGI)
+\end{frame}
+
+
+%Turing Maschinen Funktion
+\begin{frame}
+  \frametitle{Turing-Maschinen: Funktionsweise}
+Eine Turingmaschine besteht aus einem Lese-Schreibkopf und einem Array/Band mit einer Eingabe. \\
+Pro Ausführungsschritt liest der Kopf ein Symbol vom Band, schreibt ein Symbol auf das Band und geht 1 Feld nach links, rechts, oder bleibt an der selben Stelle. \\
+\ \\
+Das Band ist in beide Richtungen unbegrenzt lang und Felder ohne Symbol haben das \emph{Blanksymbol} $\hfill \Box$
+\end{frame}
+
+
+%Turing Maschinen Definition
+\begin{frame}
+  \frametitle{Turing-Maschinen: Definition}
+Eine Turingmaschine ist ein 6-Tupel $T = (Z, z_0, X, f, g, m)$, bestehend aus: \\
+\begin{itemize}
+	\item $Z$ als Menge der Zustände des Kopfes
+	\item $z_0 \in Z$ als Anfangszustand
+	\item Bandalphabet $X$
+	\item partielle Zustandsübergangsfunktion $f: Z \times Z \rightarrow Z$
+	\item p. Ausgabefunktion $g: Z \times X \rightarrow X$
+	\item p. Bewegungsfunktion $m: Z \times X \rightarrow \{ -1, 0, 1 \}$
+	\begin{itemize}
+		\item $-1 = L$ und $1 = R$
+	\end{itemize}
+\end{itemize}
+Gibt man ein nicht definiertes Tupel in $f,g,m$ ein, so hält die Turingmaschine an.
+\end{frame}
+
+
+%Turing Maschinen Beispiel
+\begin{frame}
+  \frametitle{Turing-Maschinen: Beispiel}
+Was tut die Turingmaschine?
+\end{frame}
+
+
+%Turing Maschinen Beispiel
+\begin{frame}
+  \frametitle{Turing-Maschinen: Beispiel}
+Was tut die Turingmaschine? \\
+\ \\
+Sie vertauscht an jeder 2. Stelle $a$ und $b$, hat die Eingabe ungerade Länge so wird das letzte Zeichen mit dem Blanksymbol überschrieben.
+\end{frame}
+
+
+%Turing Maschinen Aufgabe
+\begin{frame}
+  \frametitle{Turing-Maschinen: Aufgabe}
+Gib jeden Band-Zustand der TM für $aabba$ an. \\
+\ \\
+(Am Anfang und Ende des Bandes nur so viele Blanksymbole wie nötig angeben)
+\end{frame}
+
+
+%Turing Maschinen Aufgabe
+\begin{frame}
+  \frametitle{Turing-Maschinen: Aufgabe}
+Entwerfe t eine TM die Wörter $w \in \{ a, b \}^*$ umdreht. \\
+So soll aus dem Wort $aab$ das Wort $baa$ werden. \\
+\ \\
+Ihr dürft das Bandalphabet beliebig um andere Hilfssymbole erweitern.
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

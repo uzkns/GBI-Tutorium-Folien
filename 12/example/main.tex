@@ -1,0 +1,228 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#12}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Zählautomat
+\begin{frame}
+  \frametitle{Automaten}
+(Endliche) Automaten sind ähnlich zu kleinen Maschinen die mit einer Eingabe häufig ihren Zustand ändern und dann damit eine Ausgabe formen.\\
+\ \\
+Als Beispiel haben wir einen Zählautomaten, der die Tasten "$+$", "$-$" sowie "$R$" und "$OK$" hat. Der Automat zählt maximal von 0 bis 5.\\
+\begin{itemize}
+	\item Mit "$+$" wird der Wert um 1 erhöht (max. 5)
+	\item Mit "$-$" wird der Wert um 1 reduziert (min. 0)
+	\item Mit "$R$" wird der Zähler wieder auf 0 gesetzt (egal von wo aus)
+	\item Mit "$OK$" wird der Wert ausgegeben und der Zähler zurückgesetzt
+\end{itemize}
+\end{frame}
+
+
+%Grafik
+\begin{frame}
+  \frametitle{Automaten}
+An der Tafel.
+\end{frame}
+
+
+%Zustandsübergänge
+\begin{frame}
+  \frametitle{Automaten: Zustandsübergang}
+\begin{itemize}
+	\item $R$, $OK$: Eingaben
+	\item $\epsilon$, $4$: Ausgaben, dabei ist $\epsilon =$ Keine Ausgabe
+	\item Kreis mit der 4: Zustand, in unserem Fall der Zähler
+	\begin{itemize}
+		\item 0 ist bei unserem Zählautomat der Anfangszustand, markiert mit einem Pfeil aus dem nichts
+	\end{itemize}
+	\item Pfeil ($\rightarrow$): Zustandübergang von-nach, ähnlich einer gerichteten Kante
+\end{itemize}
+\end{frame}
+
+
+%Mealy Automat
+\begin{frame}
+  \frametitle{Automaten: Mealy-Automat}
+Ein Mealy-Automat ist ein 6-Tupel aus Mengen, Funktionen, einem Startzustand und zwei Alphabeten.\\
+$A=( Z, z_0, X, f, Y, g )$ \\
+\ \\
+\begin{enumerate}
+	\item $Z$ ist die (endliche) Zustandsmenge
+	\item $z_0$ ist der Startzustand
+	\item $X$ ist das Eingabealphabet
+	\item $f: Z \times X \rightarrow Z$ ist die Zustandsübergangsfunktion
+	\begin{itemize}
+		\item Aus einem Tupel $(z_1, x_1)$ bestehend aus Zustand und Eingabe wird der nächste Zustand ($\rightarrow z_2$) abgebildet
+	\end{itemize}
+	\item $Y$ ist das Ausgabealphabet
+	\item $g: Z \times X \rightarrow Y^*$ ist die Ausgabefunktion
+	\begin{itemize}
+		\item Aus einem Tupel $(z_1, x_1)$ bestehend aus Zustand und Eingabe wird die das Ausgabewort ($\rightarrow y_1$) abgebildet
+	\end{itemize}
+\end{enumerate}
+\end{frame}
+
+
+%Funktionen
+\begin{frame}
+  \frametitle{Mealy-Automat: Funktionen}
+Es gibt 4 Funktionen, die man auf einen Mealy-Automaten anwenden kann: \\
+\begin{enumerate}
+	\item Mit $f^*$: kann man ein Wort $w \in X^*$ (und ggf. einen Zustand) eingeben und erhält den Endzustand
+	\item Mit $f^{**}$ kann man ein Wort eingeben und erhält alle durchlaufenen Zustände
+	\item Mit $g^*$ kann für ein Wort die letzte Ausgabe angegeben werden
+	\item Mit $g^{**}$ kann für ein Wort alle Ausgaben angegeben werden
+\end{enumerate}
+\ \\
+(Die 4 Funktionen sind Homomorphismen)
+\end{frame}
+
+
+%Moore Automat
+\begin{frame}
+  \frametitle{Automaten: Moore-Automat}
+Ein Moore-Automat ist auch ein 6-Tupel aus Mengen, Funktionen, einem Startzustand und zwei Alphabeten.\\
+$B=( Z, z_0, X, f, Y, g )$ \\
+\ \\
+Im Gegensatz zum Mealy-Automat hat der Moore-Automat seine Ausgabe nicht im Übergang, sondern direkt im Zustand, also $h: Z \rightarrow Y^*$.\\
+\ \\
+Auch beim Moore-Automaten gelten die 4 Funktionen, $f^*$, $f^{**}$ sind identisch, aber $h^*$, $h^{**}$ ersetzten $g^*$, $g^{**}$.\\
+Effektiv ändert sich aber nichts an der Funktionsweise der Funktionen.
+\end{frame}
+
+
+%Aufgaben
+\begin{frame}
+  \frametitle{Automaten: Aufgaben}
+Gib an:\\
+\ \\
+\begin{itemize}
+	\item $f^*(z_1, STSTST)$
+	\item $f^*(z_2, TTTSSS)$
+	\item $h^{**}(SSTSTT)$
+	\item $h^{**}(z_1, \epsilon)$
+	\item $h^*(z_3, TSSSSS)$
+	\item $h^*(z_1, STST)$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Automaten: Lösungen}
+Gib an:\\
+\ \\
+\begin{itemize}
+	\item $f^*(z_1, STSTST) = z_3$
+	\item $f^*(z_2, TTTSSS) = z_2$
+	\item $h^{**}(SSTSTT) = abacabb$
+	\item $h^{**}(z_1, \epsilon) = b$
+	\item $h^*(z_3, TSSSSS) = a$
+	\item $h^*(z_1, STST) = b$
+\end{itemize}
+\end{frame}
+
+
+%Akzeptoren
+\begin{frame}
+  \frametitle{Endliche Akzeptoren}
+Endliche Akzeptoren sind Sonderfälle von Moore-Automaten die nur das Ausgabealphabet $Y = \{0, 1\}$ haben. \\
+Zustände mit Ausgabe 1 umkreist man doppelt, Zustände mit Ausgabe 0 umkreist man einfach, um sich die Ausgabe zu sparen.\\
+\ \\
+Als Tupel ist ${EA} = (Z, z_0, X, f, F)$ mit $F =$ "Menge der Zustände mit Ausgabe 1" ein endlicher Akzeptor.
+\end{frame}
+
+
+%Akzeptoren und Sprachen
+\begin{frame}
+  \frametitle{Endliche Akzeptoren und Sprachen}
+$q_4$ ist ein akzeptierender Zustand, d.h. der Akzeptor akzeptiert genau alle $w \in X^*$ die am Ende in $q_4$ landen.\\
+Mathematisch: $f^*(w) \in F \Leftrightarrow$ \emph{"EA akzeptiert w"} \\
+\ \\
+Die Menge aller Wörter $w \in X^*$ die vom Akzeptor $A$ akzeptiert werden ergibt dabei die Sprache $L(A)$.
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Endliche Akzeptoren und Sprachen}
+\begin{enumerate}
+	\item Welche Sprache akzeptiert der Akzeptor $A$ an der Tafel?
+	\item Zeichne den Akzeptor $B$ mit $L(B) = \{ a \} { \{ ab \} }^* \{ b \}$
+\end{enumerate}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,273 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#4}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Übungsblat Wdh.
+\begin{frame}
+  \frametitle{Übungsblatt häufige Fehler}
+1.3.: \emph{"Geben sie [...] möglichst genaue untere
+und obere Schranken an."}\\
+  \begin{itemize}
+	\item Möglichst genaue Schranke heißt:
+	\begin{itemize}
+		\item Für obere Schranken der kleinste Wert der über der Kardinalität liegt
+		\item Für untere Schranken der größte wert der unter der Kardinalität liegt
+  	\end{itemize}
+  \end{itemize}
+\ \\
+1.4.: \emph{"Geben Sie eine injektive Abbildung g: B $\rightarrow$ A an."}\\
+\begin{itemize}
+	\item A, B bel., d.h. konkrete Mengen wie \{$\mathbb{N}, \{1,2,3,4\}$\} sind nicht erlaubt.
+	\item So allgemein wie möglich, am besten mit bel. $n,m$
+  \end{itemize}
+\ \\
+1.5.: \emph{"Beweisen oder widerlegen Sie..."}
+\begin{itemize}
+	\item Beweis = Mathematischer Beweis zB mit Äquivalenzumformungen oder \emph{Sei $x \in A$ bel.}
+	\item Begründung, Schaubild reichen nicht aus
+	\item Gegenbeweis immer erst mit Gegenbeispiel probieren (spart Zeit \& Platz)
+  \end{itemize}
+\end{frame}
+
+
+%
+\begin{frame}
+\frametitle{$Num_k$ und $Repr_k$}
+
+Leider ist mir bei $Num_k$ und $Repr_k$ ein Fehler untergelaufen. Ihr findet die Korrekte Definition mit Beispielen im ILIAS unter \emph{Tut 42 > Num und Repr.pdf}\\
+\ \\
+Wir werden beides in Tutorium 5 am Anfang nochmal besprechen.
+\end{frame}
+
+%Zweierkomplement
+\begin{frame}
+  \frametitle{Zweierkomplement}
+Zweierkomplementdarstellung ($\mathbb{K}_n$) ist die übliche Darstellung von ganzen Zahlen im PC. Dabei "opfern" wir das erste Binär-Bit für das Vorzeichen.\\
+Zahlen werden gleichmäßig auf den positiven und negativen Bereich verteilt. Mit der 0 ist im positiven Bereich eine Zahl weniger als im negativen.\\
+\ \\
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item $\mathbb{K}_n = \{x \in \mathbb{Z} | -2^{n-1} \leq x\geq 2^{n-1} -1\}$
+	\end{itemize}
+\end{KITexampleblock}
+
+\ \\
+  \begin{itemize}
+	\item $\mathbb{K}_7 = \{-64, -63, ..., ..., 62, 63\}$ (Alle Zahlen bis $2^6$, im positiven eine Zahl weniger)
+  \end{itemize} 
+\end{frame}
+
+
+%Umrechung Zkpl
+\begin{frame}
+  \frametitle{$Zkpl_k$}
+Umrechung eriner n-stelligen Binärzahl ins Zweierkomplement mit $Zkpl_n$.\\
+\ \\
+Vorgehen bei negativen Zahlen:
+  \begin{itemize}
+	\item Nullen durch Einsen erstzen und Einsen durch Nullen (Invertieren)
+	\item 1 dazu addieren
+	\item Schauen ob die Zahl vorher positiv oder negativ war, entsprechend das erste Bit anpassen
+  \end{itemize}
+\ \\
+Bei positiven Zahlen:
+  \begin{itemize}
+	\item Nichts tun, evtl. auf richtige Länge mit 0'len auffüllen
+  \end{itemize}
+\end{frame}
+
+
+%Umrechung Zkpl Beispiel
+\begin{frame}
+  \frametitle{$Zkpl_k$: Beispiel}
+Beispielzahl ist ${-01101011}_2$\\
+\ \\
+Vorgehen:
+  \begin{itemize}
+	\item Invertieren: 10010100
+	\item +1: 10010101
+  \end{itemize}
+\end{frame}
+
+
+%Aufgaben
+\begin{frame}
+  \frametitle{$Zkpl_k$: Aufgaben}
+Rechnet die fogenden Zahlen mit Zwischenschritten um:\\
+\ \\
+  \begin{itemize}
+	\item 5 zuerst in binär, denn in ${ZK}_4$
+	\item ${-100101}_2$ in ${ZK}_9$
+	\item ${11110}_{ZK}$  zurück in binär
+  \end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{$Zkpl_k$: Lösung}
+Rechnet die fogenden Zahlen mit Zwischenschritten um:\\
+\ \\
+  \begin{itemize}
+	\item $5 = {101}_2 = {0101}_{ZK}$
+	\item ${-100101}_2 = {111011011}_{ZK}$
+	\item ${11110}_{ZK} = {-10}_2$
+  \end{itemize}
+\end{frame}
+
+
+%Homos
+\begin{frame}
+  \frametitle{Homomorphismen}
+A,B so bildet eine Abbildung $h: A \rightarrow B^*$ einen Buchstaben von A uf ein Wort aus B ab.\\
+ein Homorphismus $h^{**}: A^* \rightarrow B^*$ macht das selbe mit einem ganzen Wort aus A, wobei jedes Zeichen einzeln abgebildet wird.\\
+Ist ein Homomorphismus präfixfrei so existiert eine Umkehrfunktion die aus dem Wort aus B* wider das Wort in A* macht\\
+\ \\
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item $\forall w \in A^*: \forall x \in A: h^{**}(wx) = h^{**}(w) \cdot h(x)$
+	\end{itemize}
+	\end{KITexampleblock}
+\end{frame}
+
+
+%Beispiel
+\begin{frame}
+  \frametitle{Homomorphismen: Beispiel}
+Sei $h(a)=101, H(b)=0, h(c)=1$\\
+\ \\
+  \begin{itemize}
+	\item $h^{**}(a) = h(a) = 101$
+	\item $h^{**}(cbc) = h(c) \cdot h(b) \cdot h(c) = 101$
+  \end{itemize}
+\end{frame}
+
+
+%Huffmann-Codierung
+\begin{frame}
+  \frametitle{Huffman-Codierung}
+Die Huffman-Codierung ist ein präfixfreier Homomorphismus $A^* \rightarrow {\mathbb{Z}_2}^*$, der häufigen Zeichen eine möglichst kurze Abbildung gibt.\\
+\ \\
+Sei $N_w(x)$ die Anzahl der Vorkommnisse des Buchstaben x in w und "$N_w(x), x$" die Beschriftung des Blattes in einem Baum
+
+  \begin{itemize}
+	\item Verbinde die zwei "kleinsten" Werte
+	\item Schreibe $N_w(x_1) + N_w(x_2)$ in den neuen Knoten
+	\item So lange wiederholen, bis der Baum komplett ist
+  \end{itemize}
+\end{frame}
+
+
+%Beispiel
+\begin{frame}
+  \frametitle{Huffman: Beispiel}
+w = bcccabdd, so sind $N_w(a) = 1, N_w(b) = 2, N_w(c) = 3, N_w(d) = 2$ die Häufigkeiten in w.
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Huffman: Aufgabe}
+Stelle das folgende Wort in einem Huffman-Baum dar und erstelle das Codewort:\\
+\ \\
+w = ededddbcfbedaccb\\
+\end{frame}
+
+
+%Fragen
+\begin{frame}
+  \frametitle{Huffman: Frage}
+Ist ein Huffman-Baum eindeutig?\\
+  \begin{itemize}
+	\item
+  \end{itemize}
+\ \\
+\ \\
+Kann man ein Huffman-Wort wieder decodieren?\\
+  \begin{itemize}
+	\item 
+  \end{itemize}
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+  \frametitle{Huffman: Antwort}
+Ist ein Huffman-Baum eindeutig?\\
+  \begin{itemize}
+	\item Nein, da bei mehreren gleich-häufig vorkommenden Wörern man sich aussuchen kann, welche Kante man zuerst verbindet.
+  \end{itemize}
+\ \\
+\ \\
+Kann man ein Huffman-Wort wieder decodieren?\\
+  \begin{itemize}
+	\item Ja, dafür benötigt man aber den Baum.
+  \end{itemize}
+\end{frame}
+
+
+%Huffmann-Sonderfall
+\begin{frame}
+  \frametitle{Huffman-Codierung}
+Kommen viele Teilwörter in einem Wort w häufig vor, so macht es Sinn die Codierung mit kurzen Wörtern anstelle von einzelnen Buchtaben durchzuführen.\\
+Ansonsten bleibt das Vorgehen gleich, die Suche nach den besten Teilwörter n kann aber etwas Zeit in Anspruch nehmen.\\
+\ \\
+Beispielwort: $w = abcabccbdabc = abc \cdot abc \cdot cbd \cdot abc$
+  \begin{itemize}
+	\item h(abc) = 0, h(cbd) = 1
+	\item $h^{**}(w) = 0010$
+	\item $|w| = 12, |h^{**}(w)| = 4$, Platzeinsparung um den Faktor 3
+  \end{itemize}
+\end{frame}
+
+
+\end{document}

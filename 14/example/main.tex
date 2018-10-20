@@ -1,0 +1,310 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#14}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Hoare Tripel
+\begin{frame}
+  \frametitle{Hoare-Kalkül: Tripel}
+
+Ein Hoare-Tripel besteht aus zwei Zusicherungen und einem Stück Programmcode:\\
+\ \\
+\begin{itemize}
+	\item \{P\}: Vorbedingung
+	\begin{itemize}
+		\item P soll wahr sein bevor der Programmcode beginnt
+	\end{itemize}
+	\item S: Codesegment
+	\begin{itemize}
+		\item Ein Stück Algorithmus - eine oder mehrere Zeilen vom Code
+	\end{itemize}
+	\item \{Q\}: Nachbedingung
+	\begin{itemize}
+		\item Ist P wahr und wurde S ausgeführt so soll nun Q wahr sein.
+	\end{itemize}
+\end{itemize}
+\ \\
+Eine Hoare-Zusicherung hat also die $\{P\} S \{Q\}$
+\end{frame}
+
+
+%Hoare Regeln
+\begin{frame}
+  \frametitle{Hoare-Kalkül: Tripel}
+
+Für die Tripel gelten bestimmte Regeln ($ {HT}_1, {HT}_2, {HT}_3 $):\\
+\ \\
+\begin{itemize}
+	\item[$HT_1$] Gilt $P' \rightarrow P \wedge Q \rightarrow Q'$ und ist $\{P\} S \{Q\}$ korrekt, so ist auch $\{P'\} S \{Q'\}$ korrekt
+	\item[$HT_2$] $\{P\} S_1 \{Q\}$ und $\{Q\} S_2 \{R\}$ sind korrekt $\rightarrow$ $\{P\}S_1 S_2 \{R\}$ ist korrekt
+	\item[$HT_3$] Ist eine eine Zuweisung $x \leftarrow \beta$, so kann man aus der Nachbed. eine Vorbed. erstellen indem man x mit $\beta$ substituiert
+\end{itemize}
+\end{frame}
+
+
+%If Then Else
+\begin{frame}
+  \frametitle{Hoare-Kalkül: Verzweigungen}
+In Algortihmen gibt es auch Verzweigungen der Form \\
+\code{if B then S else T}. Diese können mit Hoare-Tripeln ausgewertet werden.\\
+\ \\
+$\{ P \}$ Verzweigung $\{ Q \}$ wahr $ \Leftrightarrow \{ P \wedge B \} S \{ Q \}$ u. $\{ P \wedge \neg B \} T \{ Q \}$ wahr\\
+d.h. für eine Verzweigung sind beide Fälle wahr wenn man die Bedigung im \code{if}-Teil umdreht.\\
+\end{frame}
+
+
+%Hoare- beweis de rrichtigkeit
+\begin{frame}
+  \frametitle{Hoare-Kalkül: Beweise}
+"Zeigen sie, dass das Hoare-Tripel $\{P\} S  \{Q\}$ korrekt ist". \\
+\ \\
+Vorgehen: 
+\begin{itemize}
+	\item $S$ in atomare Befehle zerlegen (dabei unten Anfang und dann hocharbeiten)
+	\item Für jeden Befehl ein Tripel finden und angeben
+	\item Tripel und Code verbinden
+	\item Sonderfall Verzweigungen:
+	\begin{itemize}
+		\item Jeden Fall abarbeiten
+		\item Fallbedigung $B$ herausfinden
+		\item Einzelne Fälle in $\{ P \wedge B \} S \{ Q \}$ u. $\{ P \wedge \neg B \} T \{ Q \}$ einsetzen
+	\end{itemize}
+	\item Umformen, bis $\{P\} S  \{Q\}$ herauskommt
+	\item Fertig.
+\end{itemize}
+\ \\
+Gezeigt am Beispiel von Aufgabe 6.2. an der Tafel
+\end{frame}
+
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen}
+Gehen wir zurück zu Tutorium \#3 so sind die formalen Sprachen wie folgt definiert: \\
+\ \\
+\begin{KITexampleblock}{Definition}
+	\begin{itemize}
+		\item Eine formale Sprache F über einem Alphabet A ist eine Teilmenge der Kleenschen Hülle $A^*$
+	\end{itemize}
+	\end{KITexampleblock}
+\ \\
+\ \\
+Aber was heißt das?
+\end{frame}
+
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Die Menge $A^*$}
+$A^*$ ist die Menge aller Wörter beliebiger Länge über einem Alphabet A. \\
+\ \\
+Ist $A = \{a, b, c\}$ so sind zum Beispiel
+\begin{itemize}
+	\item a
+	\item abc
+	\item cab
+	\item abcabcabaacabcabcabcacccccabcabcabcabcabcabcbbabcbcabc
+	\item $\epsilon$
+\end{itemize}
+alle in $A^*$
+\end{frame}
+
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen als Teilmenge von $A^*$}
+Eine formale Sprache ist dabei eine Teilmenge von $A^*$, also ausgesuchte Elemente aus dieser Menge. \\
+\ \\
+Sei $A$ unser bekanntes Alphabet (a-zA-Z) inkl. $0,1,2,3,4,5,6,7,8,9$ und $B$ alle Sonderzeichen mit Punkt und Komma.\\
+\ \\
+Beispielhafte Sprachen über $A \cup B$ sind definiert als:
+\begin{itemize}
+	\item $ABC = \{a, b, c\}$
+	\item $website = \{www. \cdot w_1 \cdot . \cdot w_2 | w_1, w_2 \in A \wedge |w_2| \leq 3\}$
+	\item $DCIM = \{$IMG\_ number $ .jpeg | $number$ \in \{0,...,9\}*\}$
+	\item $count_2 = \{a^n b^n | n \in \mathbb{N}\}$
+\end{itemize}
+\end{frame}
+
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen: Operationen}
+Auf formalen Sprachen gibt es Produkte, Potenzen und Konkatenationsabschlüsse: \\
+\ \\
+\begin{itemize}
+	\item $L_1$, $L_2$ form. Sprachen, so ist $L_1 \cdot L_2 = \{ w_1 \cdot w_2 | w_1 \in L_1, w_2 \in L_2 \}$ also
+	\item $\{a, b\} \cdot \{c, d\} = \{ ac, ad, bc, bd \}$
+\end{itemize}
+
+\begin{itemize}
+	\item $L^0 = \{ \epsilon \}$ und
+	\item $\forall k \in \mathbb{N}_0 : L^{k+1} = L \cdot L^k$
+\end{itemize}
+
+\begin{itemize}
+	\item $L^* = \bigcup_{i \in \mathbb{N}_0} L^i$
+	\item Jedes Wort aus $L$ bel. oft mit jedem anderen Wort aus $L$ kombiniert
+\end{itemize}
+\end{frame}
+
+
+%Formale Sprachen
+\begin{frame}
+  \frametitle{Formale Sprachen: Operationen}
+Auf formalen Sprachen gibt es Produkte, Potenzen und Konkatenationsabschlüsse: \\
+\ \\
+\begin{itemize}
+	\item $L_1$, $L_2$ form. Sprachen, so ist $L_1 \cdot L_2 = \{ w_1 \cdot w_2 | w_1 \in L_1, w_2 \in L_2 \}$ also
+	\item $\{a, b\} \cdot \{c, d\} = \{ ac, ad, bc, bd \}$
+\end{itemize}
+
+\begin{itemize}
+	\item $L^0 = \{ \epsilon \}$ und
+	\item $\forall k \in \mathbb{N}_0 : L^{k+1} = L \cdot L^k$
+\end{itemize}
+
+\begin{itemize}
+	\item $L^* = \bigcup_{i \in \mathbb{N}_0} L^i$
+	\item Jedes Wort aus $L$ bel. oft mit jedem anderen Wort aus $L$ kombiniert
+\end{itemize}
+\end{frame}
+
+
+%GBI Themen
+\begin{frame}
+  \frametitle{Klasusurthemen}
+Alle Themen aus GBI: \\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+	\item Mengen
+	\item Relationen
+	\item Wörter
+	\item Formale Sprachen
+	\item Kontextfreie Grammatiken
+	\item Induktion
+	\item Aussagenlogik
+	\item Prädikatenlogik
+	\item Huffman
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}  %%<--- here
+    \begin{center}
+\begin{itemize}
+	\item Speicher
+	\item MIMA
+	\item Hoare-Kalkül
+	\item Graphen
+	\item O-Kalkül/Mastertheorem
+	\item Automaten
+	\item RegEx
+	\item Turingmaschinen
+\end{itemize}
+     \end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+%Speicher
+\begin{frame}
+  \frametitle{Speicher}
+\begin{KITinfoblock}{Definition}
+	\begin{itemize}
+		\item $memwrite: Val^{Adr} x Adr x Val \rightarrow Val^{Adr}.$\\
+		\begin{itemize}
+			\item $(m, a, v) \mapsto m'$
+		\end{itemize}
+	\end{itemize}
+\end{KITinfoblock}
+\ \\
+\ \\
+\begin{KITinfoblock}{Definition}
+	\begin{itemize}
+		\item $memread: Val^{Adr} x Adr \rightarrow Val$\\
+		\begin{itemize}
+			\item $(m, a) \mapsto m(a)$
+		\end{itemize}
+	\end{itemize}
+\end{KITinfoblock}
+\ \\
+\ \\
+Die Operationen können auch verkettet werden. an jedem $Val^{Adr}$ kann $memwrite$ einsetzt werden um die Tabelle vor dem Lesen zu verändern.
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

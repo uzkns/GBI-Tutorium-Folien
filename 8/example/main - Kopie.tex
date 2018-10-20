@@ -1,0 +1,365 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#8}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Prädikatenlogik
+\begin{frame}
+  \frametitle{Prädikatenlogik: Grundlagen}
+
+Mit der Prädikatenlogik kann man mehr Aussagen formulieren als mit der Aussagenlogik. Wir können damit auch Aussagen in prädikatenlogische Formeln \emph{("Mathesprache")} umformlieren.\\
+\ \\
+Die Prädikatenlogik (PL) 1. Stufe benutzt die folgenden Zeichen:\\
+  \begin{itemize}
+	\item $\neg, \vee, \wedge, \rightarrow, \leftrightarrow, (, )$ aus der Aussagenlogik
+	\item $\forall$ (Allquantor für Variablen) und $\exists$ (Existenzquantor für Variablen)
+	\item $\dot = $ (Objektgleichheit/ Gleichheit 1. Stufe)
+	\item Variablen (zum Beispiel x, y, z)
+	\item Funktionen (zum Beispiel f, g, h)
+	\item Prädikate (zum Besipiel p, q, r)
+  \end{itemize}
+\end{frame}
+
+
+%Prädikate
+\begin{frame}
+  \frametitle{Prädikatenlogik: Prädikate}
+Prädikate sind Funktionen, die für eine Eingabe (eine oder mehr Variablen) einen Wahrheitswert zurückgeben.\\
+Ähnlich wie zum Beispiel \code{public boolean p (Var x, Var y)} in Java, die für Var x und y einen Boolean-Wahrheitswert zurückgibt.\\
+\ \\
+Prädikate in PL sehen zum Besipiel so aus:\\
+\begin{itemize}
+	\item Vater(x,y): Wahr, wenn x Vater von y ist
+	\item Mann(x): Wahr wenn x Männlich ist, sonst falsch
+	\item Verheiratet(x,y): wahr wenn x und y verheiratet sind
+\end{itemize}
+\end{frame}
+
+
+%Prädikatenlogische Formeln Aufgaben
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgaben}
+Die folgenden Prädikate sind gegeben\\
+\begin{itemize}
+	\item Vater(x,y): Wahr, wenn x Vater von y ist
+	\item Mann(x): Wahr wenn x Männlich ist, sonst falsch
+	\item Verheiratet(x,y): wahr wenn x und y verheiratet sind
+\end{itemize}
+\ \\
+Drücke die Aussagen in PL aus\\
+\begin{itemize}
+	\item Jede männliche Person hat mindestens einen Vater
+	\item Jeder Mann hat mehrere Kinder
+	\item Jede Frau ist mit \emph{höchstens} einem Mann verheiratet
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+%Prädikatenlogische Formeln Aufgaben
+\begin{frame}
+  \frametitle{Prädikatenlogik: Lösung}
+Drücke die Aussagen in PL aus\\
+\begin{itemize}
+	\item Jede männliche Person hat mindestens einen Vater
+	\begin{itemize}
+		\item $\forall x \exists y (Mann(x) \vee Vater(y,x))$
+		\item "Für jede Person x exist. min. 1 Person y wo gilt: x ist ein Mann und y ist Vater von x" 
+	\end{itemize}
+	\item Jeder Mann hat mehrere Kinder
+	\begin{itemize}
+		\item $\forall x \exists y \exists z (Mann(x) \wedge Vater(x,y) \wedge Vater(x,z) \wedge \neg (y \dot = z))$
+		\item "Für jede Person x existiert min. 1 Person y und 1 Person z wo gilt: x ist männlich und Vater von y und z wobei y $\neq$ z ist"
+	\end{itemize}
+	\item Jede Frau ist mit \emph{höchstens} einer Person verheiratet
+	\begin{itemize}
+		\item $\forall x \forall y \forall z (\neg Mann(x) \wedge \neg (y \dot = z) \wedge Verheiratet(x,y)) \rightarrow \neg Verheiratet(x,z))$
+		\item Für jede Person x,y, z gilt: Ist x nicht männlich und y,z männlich und y $\neq$ z und x mit y verheiratet so folgt: x ist nicht mit z verheiratet
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%PL Aufbau
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufbau}
+\begin{itemize}
+	\item Jede Variable ist ein Term (Bsp.: x)
+	\item Eine Funktion f mit Termen als Eingabe ist wieder ein Term (Bsp: f(x,y, f(z)))
+\end{itemize}
+\ \\
+\begin{itemize}
+	\item Atomare Formeln sind die "kleinsten" PL-Formeln die wir bilden können
+	\item Objektgleichheit $(x \dot = y)$ ist eine atomare Formel
+	\item Ein Prädikat mit Termen als Eingabe ist eine atomare Formel
+	\item Aus atomaren Formeln bilden wir mittels Konnektiven größere PL-Formeln
+\end{itemize}
+\ \\
+Natürlich gibt es auch bei PL Regeln für (syntaktisch) korrekte Formeln.
+\end{frame}
+
+
+%Aufgabe Bildung von PL-Formeln
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgabe}
+\emph{p,q} einstellige Prädikate, \emph{r} zweistelliges Prädikat, \emph{c,d} Konstanten (nullstellige funktionen), \emph{x,y,z} Variablen\\
+\ \\
+Sind die folgenden PL-Formeln syntaktisch korrekt gebildet?\\
+\begin{itemize}
+	\item $\forall x ( \forall y ( \forall z (r(x,y) \wedge r(y,z) \rightarrow r(x,z) ) ) )$
+	\item $\forall x \forall y (p(x) \rightarrow r(y))$
+	\item $\forall x \exists p: p(x)$
+	\item $\forall x (q(x)) \wedge \exists x (\neg q(x))$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgabe}
+Sind die folgenden PL-Formeln syntaktisch korrekt gebildet?\\
+\begin{itemize}
+	\item $\forall x ( \forall y ( \forall z (r(x,y) \wedge r(y,z) \rightarrow r(x,z) ) ) )$ - Ja
+	\item $\forall x \forall y (p(x) \rightarrow r(y))$ - Nein, r ist zweistellig
+	\item $\forall x \exists p: p(x)$ - Nein, $\exists$ gilt nur für Variablen, nicht für Prädikate
+	\item $\forall x (q(x)) \wedge \exists x (\neg q(x))$ - Ja
+\end{itemize}
+\end{frame}
+
+
+%PL Wirkungsbereich
+\begin{frame}
+  \frametitle{Prädikatenlogik: Quantoren-Wirkungsbereich}
+$\forall$ und $\exists$ haben einen begrenzten "Wirkungsbereich" auf die Variablen hinter ihnen.\\
+Der Wirkungsbereich eines Quantores ist eine Teilformel und die Var. muss die Bindung in der Teilformel befolgen.\\
+\ \\
+Bspe.:\\
+\begin{itemize}
+	\item $\forall x (p(x) \wedge q(x,y) ) \rightarrow r(x)$ - beide Prädikate sind gebunden
+	\item $\forall x (p(x) \wedge \forall x (\neg p(x) ) )$ - Überschattung, also ein x umbenennen
+\end{itemize}
+\ \\
+Die Bindung von Variablen wird später noch sehr wichtig.
+\end{frame}
+
+
+%PL Bindung Aufgabe
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgabe}
+Kennzeichne die Bindung von Variablen in der Formel mit Pfeilen zu ihren Quantoren\\
+\begin{itemize}
+	\item $p(x) \rightarrow \forall x \exists y (p(x) \wedge q(y,z) \leftrightarrow \forall z ( q(x,z) ) )$
+\end{itemize}
+\end{frame}
+
+
+%PL Substitution
+\begin{frame}
+  \frametitle{Prädikatenlogik: Substitution}
+In PL-Formeln kann man Variablen gegen andere Variablen oder Terme ersetzen.\\
+Wichtig dabei: Es werden nur freie Variablen ersetzt (also solche die nicht an einen Quantor gebunden sind)\\
+\ \\
+Eine Substitution schreibt man so: $\epsilon [x / y](A)$, sie ersetzt alle x durch y in Formel A.\\
+\ \\
+Beispielsubstitutionen:
+\begin{itemize}
+	\item $\beta_1 [x / 5] ( p(x) \vee q(x,y) ) = ( p(5) \vee q(5,y) )$
+	\item $\beta_2 [x / f(x)](p(x) \vee \forall x (q(x, y))) = p(f(x)) \vee \forall x (q(x, y)))$
+\end{itemize}
+\end{frame}
+
+
+%Substitution Kollision
+\begin{frame}
+  \frametitle{Prädikatenlogik: Substitutionskollisionen}
+Eine Substitution enthält eine Kollision falls in der Substitution eine freie Variable gegen eine gebundene Variable (also eine Variable im Wirkungsbereich eine Quantors) getauscht wird.\\
+Eine Substitution, die keine Kollision enthält heißt "Kollisionsfrei" und ist zu bevorzugen.\\
+\ \\
+Bsp.:\\
+\begin{itemize}
+	\item $\beta_1 [y / x] ( \forall x : x \leftrightarrow y ) = ( \forall x : x \leftrightarrow x )$
+\end{itemize}
+\end{frame}
+
+%Aufgabe Substiution
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgabe}
+Führe die Substitutionen aus:\\
+\begin{itemize}
+	\item $\sigma_1 [ x / f(y,z), y / 9 ](q(x, f(y,z)) \wedge \forall x (p(x)) )$
+	\item $\sigma_2 [ x / g(y), y / x ]( \beta_1 [ x/y, y/f(x,y) ] (\exists z ( r(x,y,z) ) ) )$
+\end{itemize}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Prädikatenlogik: Lösung}
+Führe die Substitutionen aus:\\
+\begin{itemize}
+	\item $\sigma_1 [ x / f(y,z), y / 9 ](q(x, f(y,z)) \wedge \forall x (p(x)) )$
+	\begin{itemize}
+		\item $q(f(y,z), f(9, z) \wedge \forall x ( p(x) )$
+	\end{itemize}
+	\item $\sigma_2 [ x / g(y), y / x ]( \beta_1 [ x/y, y/f(x,y) ] (\exists z ( r(x,y,z) ) ) )$
+	\begin{itemize}
+		\item $\sigma_2 [ x / g(y), y / x ]( \exists z ( r(y, f(x,y), z) ) )$
+		\item $\exists z ( r(x,f( g(y), x), z) )$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%PL Semantik
+\begin{frame}
+  \frametitle{Prädikatenlogik: Semantik}
+Neben dem syntaktisch korrekten Aufbau von Prädikatenlogik-Formeln kann man diesen auch eine Bedutung (Semantik) zuordnen und sie auswerten.\\
+\ \\
+Ähnlich in der Aussagnelogik gibt es \emph{Val} und \emph{I}. I weist einer Konstanten, Funktion, Abbildung oder Relation eine Bedeutung zu, wobei Val einen ganzen Term auswertet.\\
+\ \\
+Zusätzlich gibt es in der PL noch 2 weitere Dinge, die sich von der Aussagenlogik unterscheiden:\\
+\begin{itemize}
+	\item Die Zielmenge, auf die I abbildet (Ein Universum \emph{D} und $\{w,f\}$)
+	\item Belegung ungebundener bzw. freier Variablen (idR $\beta$)
+\end{itemize}
+\ \\
+Das Tupel (D,I) ist damit eine Interpretation und mit $val_{D,I, \beta}$ kann betimmt werden ob eine Formel wahr ist.
+\end{frame}
+
+
+%PL Aufgabe
+\begin{frame}
+  \frametitle{Prädikatenlogik: Aufgabe}
+p, einstelliges Prädikat, q zweistelliges Prädikat, f zweistellige Funktion, c, Konstante, x,y Variablen.\\
+\ \\
+D = $\mathbb{N}_0$\\
+$\beta(x) = 7$\\
+I(p(x)) = w $\leftrightarrow x \geq 5$\\
+I(q(x,y)) = w $\leftrightarrow x > y$\\
+I(c) = 10\\
+I(f(x,y)) = (x-y)\\
+\ \\
+\begin{itemize}
+	\item $p(x) \rightarrow \exists y ( q(y,x) \wedge p(y) )$
+	\item $p(x) \rightarrow \exists y ( q( f(c,y), x ) \wedge p(y) )$
+\end{itemize}
+\end{frame}
+
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Prädikatenlogik: Lösung}
+\begin{itemize}
+	\item $p(x) \rightarrow \exists y ( q(y,x) \wedge p(y) )$
+	\begin{itemize}
+		\item $Val_{D,I,\beta}(p(x)) = I(p(7)) = w$
+		\item $\exists y$ bel. wählbar also $y = 8 \Rightarrow I(q(8,7)) = w$ und $I(p(8)) = w \Rightarrow Val_{D,I,\beta}(\exists y ...) = w \Rightarrow$
+$Val_{D,I,\beta}(p(x) \rightarrow ...) = w$
+	\end{itemize}
+	\item $p(x) \rightarrow \exists y ( q( f(c,y), x ) \wedge p(y) )$
+	\begin{itemize}
+		\item $Val_{D,I,\beta}(p(x)) = w$ (s.o.)
+		\item $Val_{D,I, \beta}(q( f(c,y), x ) ) = Val_{D,I, \beta}(q( f(c,y), x ) ) = Val_{D,I, \beta}(q( 10-y, 7 ) ) \rightarrow w$ für $y \in \{ 0,1,2 \}$
+		\item $Val_{D,I, \beta}( p(y) ) = w$ für $y \geq 5$
+		\item Keine Lösung da $y \in \{ 0,1,2 \}$ und $y \geq 5$ nicht beide gelten können
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

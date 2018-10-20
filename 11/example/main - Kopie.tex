@@ -1,0 +1,212 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 42, \#11}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Landau Notation
+\begin{frame}
+  \frametitle{Algorithmen: O-Kalkül}
+Um Algorithmen zu vergleichen und einzuordnen gibt es verschiedene Schranken: \\
+\begin{itemize}
+
+	\item Obere Schranke $O$ (Groß-O): In $O( f(n) )$ sind alle Funktionen die langsamer oder gleich schnell wie f wachsen.
+	\begin{itemize}
+		\item $\{ g(n) | \exists c \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : g(n) \leq c \cdot f(n) \}$
+	\end{itemize}
+
+	\item Obere Schranke $\Omega$ (Omega): In $\Omega ( f(n) )$ sind alle Funktionen die schneller oder gleich schnell wie f wachsen.
+	\begin{itemize}
+		\item $\{ g(n) | \exists c \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : g(n) \geq c \cdot f(n) \}$
+	\end{itemize}
+
+	\item Obere Schranke $\Theta$ (Theta): In $\Theta ( f(n) )$ sind alle Funktionen die genau gleich schnell wie f wachsen.
+	\begin{itemize}
+		\item $\{ g(n) | \exists c_1, c_2 \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : c_1 f(n) \leq g(n) \leq c_2 f(n) \}$
+		\item $O( f(n) ) \cap \Omega( f(n) )$
+	\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+
+%Beispiel
+\begin{frame}
+  \frametitle{O-Kalkül: Beispiel}
+Sei $f(n) = \Pi \cdot n^{10}$ und $g(n) = \frac{1}{e^9} \cdot n^{10}$.\\
+\ \\
+Finde passende $c$, $n_0$ um das Laufzeitverhalten von $f$ und $g$ zu vergleichen.
+\end{frame}
+
+
+%Besipiel Lösung
+\begin{frame}
+  \frametitle{O-Kalkül: Beispiel}
+Sei $f(n) = \Pi \cdot n^{10}$ und $g(n) = \frac{1}{e^9} \cdot n^{10}$.\\
+\ \\
+\begin{itemize}
+	\item $f(n) = \Pi n^{10} \leq ( e^9 \Pi ) \cdot \frac{1}{e^9} n^{10} = e^9 \Pi = g(n)$ ab $n_0 = 1$
+	\begin{itemize}
+		\item $f(n) \in O( g(n) )$
+	\end{itemize}
+	\item $g(n) = \frac{1}{e^9} \leq n^{10} \leq \Pi n^10 = c \cdot f(n)$
+	\begin{itemize}
+		\item $g(n) \in O( f(n) )$
+	\end{itemize}
+\end{itemize}
+\ \\
+Also ist $g(n) \in \Theta( f(n) )$.
+\end{frame}
+
+
+%Aufgaben
+\begin{frame}
+  \frametitle{O-Kalkül: Aufgaben}
+
+\begin{itemize}
+	\item $f(n) = 5n^2 + 3$ und $g(n) = \frac{1}{2} n^2$
+	\item $f(n) = 3^n$ und $g(n) = 5^n$
+	\item $f(n) = 3n^7 + 4n^6 - n^3 + n$ und $g(n) = 2n^7 - n^5 + 3n^2$
+\end{itemize}
+\ \\
+Finde passende $c$, $n_0$ um das Laufzeitverhalten von $f$ und $g$ zu vergleichen.
+\end{frame}
+
+
+%Mastertheorem
+\begin{frame}
+  \frametitle{Mastertheorem}
+Das Mastertheorem ermöglicht Laufzeitabschätzungen für rekursive Algorithmen. \\
+Die Funktionen der Algorithmen müssen folgende Form besitzen, damit das Mastertheorem angewendet werden kann: \\
+$T(n) = a \cdot T(\frac{n}{b}) + f(n)$.
+\end{frame}
+
+
+%Mastertheorem Fälle
+\begin{frame}
+  \frametitle{Mastertheorem: Fälle}
+Bei der Laufzeit der Form $T(n) = a \cdot T(\frac{n}{b}) + f(n)$ gibt es 3 Fälle:\\
+\ \\
+\begin{enumerate}
+	\item Ist $f(n) \in O( n^{{log}_{b}a - \epsilon} )$ für ein $\epsilon > 0 \Rightarrow T(n) \in \Theta( n^{{log}_{b} a} )$
+	\item Ist $f(n) \in \Theta( n^{{log}_b a} ) \Rightarrow T(n) \in \Theta( n^{{log}_b a} \cdot {log} n )$
+	\item Ist $f(n) \in \Omega( n^{{log}_b a+\epsilon} )$ für ein $\epsilon > 0$ und $\exists d \in (0,1)$, sodass für ein großes n gilt: $a \cdot f(\frac{n}{b}) \leq d f(n) \Rightarrow T(n) \in \Theta( f(n) )$
+\end{enumerate}
+\end{frame}
+
+
+%MT Aufgaben
+\begin{frame}
+  \frametitle{Mastertheorem: Aufgaben}
+\begin{enumerate}
+	\item $ T(n) = 2 T( \frac{n}{2} ) + 10 n $
+	\item $ 20 n^2 + T( \frac{n}{2} ) \cdot 8 $
+	\item $ 4 T( \frac{n}{4} ) + n^2 $
+\end{enumerate}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Mastertheorem: Lösung}
+\begin{enumerate}
+	\item $a = 2, b = 2, f(n) = 10n$; ${log}_b a = 1$; $f(n) = 10n \in \Theta(n^1) \Rightarrow T(n) \in \Theta(n \cdot log n)$
+	\item  $a = 8, b = 2, f(n) = 20n^2$;  ${log}_b a = 3$; $f(n) = 20n^2 \in O( n^{log}_b a-\epsilon ) = O( n^{3-\epsilon} )$ für $\epsilon = \frac{1}{2} \Rightarrow T(n) \in \Theta( n^3 )$
+\end{enumerate}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+  \frametitle{Mastertheorem: Lösung der 3.}
+$a = 4, b = 4, f(n) = n^2$, \\
+${log}_b a = 1$, \\
+$f(n) = n^2 \in \Omega( n^{{log}_b a+\epsilon} ) = \Omega( n^{1+\epsilon} )$, \\
+Für $\epsilon = \frac{1}{2}$. Es soll gelten $a f(\frac{n}{b}) \leq d f(n), d \in (0,1)$.\\
+\ \\
+$a f(\frac{n}{b}) = 4 f(\frac{n}{4}) = \frac{n^2}{4} \leq d n^2 = d f(n)$ mit $d = \frac{1}{4}$. \\
+$\Rightarrow T(n) \in \Theta(n^2)$
+
+\end{frame}
+
+
+%Klausuraufgaben
+\begin{frame}
+  \frametitle{Klausuraufgaben}
+Um der Vorlesung nicht zu weit "voraus" zu sein, machen wir jetzt ein paar Klausuraufgaben zu Themen die wir schon hatten.\\
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
