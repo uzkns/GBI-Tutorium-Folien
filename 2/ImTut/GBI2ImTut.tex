@@ -210,60 +210,179 @@ Das leere Wort hat Länge $| \epsilon |$ = 0, da es aus 0 Zeichen besteht
 \end{KITexampleblock}
 \end{frame}
 
-%Formale Sprachen
 \begin{frame}
-  \frametitle{Formale Sprachen}
-
-Sprache: Aussprache, Stil, Satzbau, Wortwahl\\
-\ \\
-In der Informatik: Aufbau vom Befehlen, Compiler, WWW-Seiten\\
-\ \\
-\begin{KITalertblock}{Problem}
-	\begin{itemize}
-		\item Woher weiß der Computer ob das (Sprach-)Gebilde korrekt ist?
-	\end{itemize}
-\end{KITalertblock}
-\end{frame}
-
-%Formale Sprachen
-\begin{frame}
-  \frametitle{Formale Sprachen}
-
-Sprache: Aussprache, Stil, Satzbau, Wortwahl\\
-\ \\
-In der Informatik: Aufbau vom Befehlen, Compiler, WWW-Seiten\\
-\ \\
-\begin{KITinfoblock}{Lösung}
-	\begin{itemize}
-		\item Eine formelle Sprache als Teilmenge von $A^*$ definiert was richtig ist und was nicht
-	\end{itemize}
-\end{KITinfoblock}
-\end{frame}
-
-%Beispiel
-\begin{frame}
-  \frametitle{Formale Sprachen: Beispiel}
-
-A = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., -, +\}, F $\subseteq A^*$ Formalsprache der Dezimaldarstellung aller Zahlen $\in \mathbb{Q}$
-\end{frame}
-
-%Beispiel
-\begin{frame}
-  \frametitle{Formale Sprachen: Beispiel}
-
-A = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., -, +\}, F $\subseteq A^*$ Formalsprache der Dezimaldarstellung aller Zahlen $\in \mathbb{Q}$
-
+\frametitle{Aussagen}
+Was sind sind sinnvolle Aussagen?\\\
 \begin{itemize}
-	\item +1234567890
-	\item 236
-	\item -310.25
+	\item "Dieses Tutorium findet wöchentlich statt."
+	\item $f: \mathbb{N}_+ \rightarrow \mathbb{R}, x \mapsto 2x$ ist surjektiv.
+	\item Wenn es regnet wird die Straße nass.
+	\item Grün ist toll
+	\item Regnet es?
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Aussagen}
+Was sind sind sinnvolle Aussagen? \\\
+\begin{itemize}
+	\item "Dieses Tutorium findet wöchentlich statt." \textbf{Wahr}
+	\item $f: \mathbb{N}_+ \rightarrow \mathbb{R}, x \mapsto 2x$ ist surjektiv. \textbf{Falsch}
+	\item Wenn es regnet wird die Straße nass. \textbf{Wahr}
+	\item Grün ist toll \emph{Keine Ahnung}
+	\item Regnet es? \emph{Wo?}
+\end{itemize}
+\end{frame}
+
+
+%Aussagen
+\begin{frame}
+\frametitle{Aussagen: Grundlagen}
+Aussagen sind entweder objektiv wahr oder falsch, nichts dazwischen. Man kann sie mit Ja oder Nein beantworten.
+\end{frame}
+
+
+%Verknüpfung
+\begin{frame}
+\frametitle{Aussagen: Verknüpfung}
+Wir können die Grundaussagen miteinander verknüpfen. Seien A, B zwei Aussagen so gibt es folgende Verknüpfungen:\\
+\ \\
+\begin{tabular}{cc|ccccc}
+A & B & $\neg A$ & $A \vee B$ & $A \wedge B$ & $A \rightarrow B$ & $A \leftrightarrow B$\\ \hline
+f  & f  &   w & f  & f  & w  & w\\
+f  & w &   w & w & f  & w & f\\
+w & f  &   f  & w & f  & f   & f\\
+w & w &   f  & w & w & w & w\\
+\end{tabular}\\
+\end{frame}
+
+
+%Verknüpfung II
+\begin{frame}
+\frametitle{Aussagen: Verknüpfung}
+
+
+\begin{KITexampleblock}{ }
+\begin{itemize}
+\item Die Verknüpfung $A \rightarrow B$ entspricht der Verknüpfung $\neg A \vee B$
+\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+\begin{KITexampleblock}{ }
+\begin{itemize}
+\item Die Verknüpfung $A \leftrightarrow B$ entspricht der Verknüpfung $(A \rightarrow B) \wedge (B \rightarrow A)$
+\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+\begin{KITexampleblock}{ }
+\begin{itemize}
+\item Die Reihenfolge der Verknüpfungen ist: (, ) vor $\neg$ vor $\vee$ vor $\wedge$ vor $\rightarrow$ vor $\leftrightarrow$
+\end{itemize}
+\end{KITexampleblock}\\
+
+
+\end{frame}
+
+%Lösung
+\begin{frame}
+\frametitle{Aufgabe}
+Wertet die komplexe Aussage mittels Tabelle aus:\\
+\ \\
+$\neg A \wedge (B \rightarrow A) \leftrightarrow \neg (A \vee \neg B)$\\
+\ \\
+\end{frame}
+
+%Lösung
+\begin{frame}
+\frametitle{Aufgabe}
+Wertet die komplexe Aussage mittels Tabelle aus:\\
+\ \\
+$\neg A \wedge (B \rightarrow A) \leftrightarrow \neg (A \vee \neg B)$\\
+\ \\
+
+\begin{tabular}{cc|ccccc|c|cccc}
+&&1 & 9 & 2 & 6 & 3 & 10 & 8 & 4 & 7 & 5\\
+A & B & $\neg A$ & $\wedge$ & $(B$ & $\rightarrow$ & $A)$ & $\leftrightarrow$ & $\neg$ & $(A$ & $\vee$ & $\neg B)$\\
+\hline
+f & f & w & w & f & w & f & f & f & f & w & w\\
+f & w & w & f & w & f & f & f & w & f & f & f\\
+w & f & f & f & f & w & w & w & f & w & w & w\\
+w & w & f & f & w & w & w & w & f & w & w & f\\
+\end{tabular}\\
+
+\end{frame}
+
+
+%Quantoren
+\begin{frame}
+\frametitle{Quantoren}
+es gibt 2 Quantoren:
 \ \\
 \begin{itemize}
-	\item +-5
-	\item 3+
-	\item 31..
-	\item -.+.-.+.-.+.-.+.-
+\item $\forall$: Für alle/jedes ... gilt, dass...
+\item $\exists$: Es gibt (min.) ein..., sodass...
+\end{itemize}
+\end{frame}
+
+%Lösung
+\begin{frame}
+\frametitle{Aufgabe}
+Formulert die Aussagen mittels Prädikatenlogik (d.h. mit Quantoren und Konnektiven):\\
+\ \\
+Sei V die Menge aller Vögel, Eltern(v) die Menge der Eltern des Vogels v, Farbe(v) die Farbe von v\\
+\ \\
+\begin{itemize}
+	\item Jeder Vogel kann fliegen, wenn alle Eltern fliegen können
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	\item Alle schwarzen Vögel können fliegen
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+%Lösung
+\begin{frame}
+\frametitle{Aufgabe}
+Formulert die Aussagen mittels Prädikatenlogik (d.h. mit Quantoren und Konnektiven):\\
+\ \\
+Sei V die Menge aller Vögel, Eltern(v) die Menge der Eltern des Vogels v, Farbe(v) die Farbe von v\\
+\ \\
+\begin{itemize}
+\item Jeder Vogel kann fliegen, wenn alle Eltern fliegen können
+\begin{itemize}
+\item $\forall v \in V:$ Eltern(v) können fliegen $\rightarrow$ v kann fliegen.
+\end{itemize}
+\item Alle schwarzen Vögel können fliegen
+\begin{itemize}
+\item $\forall v \in V:$ Farbe(v)$ = $schwarz $\rightarrow$ v kann fliegen.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%Interpretation
+\begin{frame}
+\frametitle{Interpretationen}
+\begin{KITexampleblock}{Definition}
+\begin{itemize}
+\item eine Interpretation I ist eine Belegung der Variablen in der Formel\\
+z.B. I(A)=w und I(B)=f
+\end{itemize}
+\end{KITexampleblock}\\
+\ \\
+$val_I(F)$ gibt den Wahrheitswert der Formel F zur Belegung I an.\\
+z.B. $val_I(A \rightarrow B)=f$ mit obigem I\\
+\ \\
+eine aussagenlogische Formel ist entweder
+
+\begin{itemize}
+\item \textbf{Nicht erfüllbar}, wenn es keine Interpretation gibt für die sie wahr ist.
+\item \textbf{Erfüllbar}, wenn es eine Interpretation gibt für die sie erfüllbar ist.
+\item \textbf{Nicht Allgemeingültig}, wenn sie für nicht jede Interpration wahr ist (also für min. 1 Interpretation falsch)
+\item \textbf{Allgemeingültig}, wenn sie für jede Interpretation wahr ist.
 \end{itemize}
 \end{frame}
 
