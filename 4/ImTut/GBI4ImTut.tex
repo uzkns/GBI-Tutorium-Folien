@@ -28,7 +28,7 @@
 \pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
 
 
-\title{Tutorium 42, \#4}
+\title{Tutorium 17, \#4}
 \subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
 
 \author[Max Göckel]{Max Göckel}
@@ -51,42 +51,159 @@
 \end{frame}
 
 
-%Übungsblat Wdh.
+%Num_k
 \begin{frame}
-  \frametitle{Übungsblatt häufige Fehler}
-1.3.: \emph{"Geben sie [...] möglichst genaue untere
-und obere Schranken an."}\\
-  \begin{itemize}
-	\item Möglichst genaue Schranke heißt:
+\frametitle{$Num_k$}
+Wenn w ein Wort ist, das eine Zahl zur Basis k darstellt, so ist $Num_k(w)$ die Darstellung dieses Wortes/dieser Zahl im Dezimalsystem.\\
+\ \\
+\begin{itemize}
+	\item Definition der Funktion mit w=w'$\cdot$x.
 	\begin{itemize}
-		\item Für obere Schranken der kleinste Wert der über der Kardinalität liegt
-		\item Für untere Schranken der größte wert der unter der Kardinalität liegt
-  	\end{itemize}
-  \end{itemize}
-\ \\
-1.4.: \emph{"Geben Sie eine injektive Abbildung g: B $\rightarrow$ A an."}\\
-\begin{itemize}
-	\item A, B bel., d.h. konkrete Mengen wie \{$\mathbb{N}, \{1,2,3,4\}$\} sind nicht erlaubt.
-	\item So allgemein wie möglich, am besten mit bel. $n,m$
-  \end{itemize}
-\ \\
-1.5.: \emph{"Beweisen oder widerlegen Sie..."}
-\begin{itemize}
-	\item Beweis = Mathematischer Beweis zB mit Äquivalenzumformungen oder \emph{Sei $x \in A$ bel.}
-	\item Begründung, Schaubild reichen nicht aus
-	\item Gegenbeweis immer erst mit Gegenbeispiel probieren (spart Zeit \& Platz)
-  \end{itemize}
+		\item $Num_k(\epsilon)=0$
+		\item $Num_k(w'x) = k \cdot Num_k(w') + num_k(x)$ mit $x \in \mathbb{Z}_k$ und $w' \in \mathbb{Z}_k^*$
+		\item $num_k(x) = x$
+	\end{itemize}
+\end{itemize}
 \end{frame}
 
 
-%
+%Bsp 1
 \begin{frame}
-\frametitle{$Num_k$ und $Repr_k$}
-
-Leider ist mir bei $Num_k$ und $Repr_k$ ein Fehler untergelaufen. Ihr findet die Korrekte Definition mit Beispielen im ILIAS unter \emph{Tut 42 > Num und Repr.pdf}\\
+\frametitle{$Num_k$: Beispiel}
+Sei $w_1 = 5_8$ (5 zur Basis 8).\\
 \ \\
-Wir werden beides in Tutorium 5 am Anfang nochmal besprechen.
+$Num_8(5)$\\
+$= 8 \cdot Num_8(\epsilon) + num_8(5)$\\
+$= 8 \cdot 0 + 5$\\
+$= 5$.
 \end{frame}
+
+
+%Aufgabe
+\begin{frame}
+\frametitle{$Num_k$: Aufgabe}
+Sei $w_2$=B66 in der Basis 16\\
+\begin{itemize}
+	\item Gib die Repräsentation der Zahl im Dezimalsystem mithilfe der $Num_k$-Funktion an.
+\end{itemize}  
+\end{frame}
+
+
+%Lösung
+\begin{frame}
+\frametitle{$Num_k$: Lösung}
+
+Sei $w_3 = B66_{16}$ (In Hexadezimal gilt B = 11, also  $w = 11 \cdot 6 \cdot 6$ in der Basis $16$).\\
+\ \\
+$Num_{16}(B66)$ \\
+$= 16 \cdot Num_{16}(B6) + num_{16}(6) $\\
+$= 16 \cdot (16 \cdot Num_{16}(\epsilon B) + num_{16}(6)) + num_{16}(6)$ \\
+$= 16 \cdot (16 \cdot (16 \cdot Num_{16}(\epsilon) num_{16}(B)) + num_{16}(6)) + num_{16}(6) $\\
+$= 16 \cdot (16 \cdot 11 + 6) + 6 $\\
+$= (16 \cdot 16 \cdot 11) + (16 \cdot 6) + 6 $\\
+$= 2816 + 96 + 6$\\
+$= 2918$ \\
+\end{frame}
+
+
+%Repr_k
+\begin{frame}
+\frametitle{$Repr_k$}
+$Repr_k$ ist die Darstellung einer Dezimalzahl in der Basis $k$.
+\ \\
+\begin{itemize}
+	\item Definition:
+	\begin{itemize}
+		\item n < k: $repr_k(x)$
+		\item n $\geq$ k: $Repr_k(x div k) \cdot repr_k(n mod k)$
+	\end{itemize}  
+\end{itemize} 
+\end{frame}
+
+
+%Repr Beispiel
+\begin{frame}
+\frametitle{$Repr_k$: Beispiel}
+
+$w = 29$ und $k = 3$.\\
+\ \\
+$ Repr_3(29)$ \\
+$= Repr_3(\frac{29}{3}) \cdot repr_3(29 \bmod 3)$ \\
+$= Repr_3(9) \cdot 2$ \\
+$= Repr_3(\frac{9}{3}) \cdot repr_3(9 \bmod 3) \cdot 2$ \\
+$= Repr_3(3)\cdot 0 \cdot 2$ \\
+$= Repr_3(1) \cdot repr_3(0) \cdot 0 \cdot 2$ \\
+$= repr_3(1) \cdot 0 \cdot 0 \cdot 2$ \\
+$= 1 \cdot 0 \cdot 0 \cdot 2 = 1002_3$\\
+\ \\
+\end{frame}
+
+
+%Aufgaben
+\begin{frame}
+\frametitle{$Repr_k$: Aufgabe}
+w=53 und k=5.
+\ \\
+\begin{itemize}
+\item Stelle w mithilfe der $Repr_k$-Funktion dar.
+\end{itemize} 
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+\frametitle{$Repr_k$: Lösung}
+$w = 53$ und $k = 5$.\\
+\ \\
+$ Repr_5(53)$ \\
+$= Repr_5(\frac{53}{5}) \cdot repr_5(53 \bmod 5)$ \\
+$= Repr_5(10) \cdot repr_5(3)$ \\
+$= Repr_5(\frac{10}{5}) \cdot repr_5(10 \bmod 5) \cdot 3$ \\
+$= Repr_5(2) \cdot 0 \cdot 3$ \\
+$= 2 \cdot 0 \cdot 3 = 203_5$
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Binärsystem}
+Im Dezimalsystem gibt es die Ziffern $1..9$. \\
+\ \\
+Im Binär- oder Dualsystem gibt es nur 2 Ziffern: $1,2$.\\
+Die Wertigkeit jeder Ziffer $Z$ ist dabei $Z \cdot 2^i$.
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Binärtabelle}
+
+\begin{tabular}{c|c|c|c|c}
+	Wertigkeit: & $2^3=8$ & $2^2=4$ & $2^1=2$ & $2^0=1$ \\
+	\hline
+	0  & 0 & 0 & 0 & 0 \\
+	1  & 0 & 0 & 0 & 1 \\
+	2  & 0 & 0 & 1 & 0 \\
+	3  & 0 & 0 & 1 & 1 \\
+	4  & 0 & 1 & 0 & 0 \\
+	5  & 0 & 1 & 0 & 1 \\
+	6  & 0 & 1 & 1 & 0 \\
+	7  & 0 & 1 & 1 & 1 \\
+	8  & 1 & 0 & 0 & 0 \\
+	9  & 1 & 0 & 0 & 1 \\
+	10 & 1 & 0 & 1 & 0 \\
+	11 & 1 & 0 & 1 & 1 \\
+	12 & 1 & 1 & 0 & 0 \\
+\end{tabular}
+\ \\
+ \ \\
+Zahl 1100: $1 \cdot 2^3 + 1 \cdot 2^2 + 0 \cdot 2^1 + 0 \cdot 2^0 = 8 + 4 + 0 + 0 = 12$ 
+
+\end{frame}
+
+
+
+
 
 %Zweierkomplement
 \begin{frame}

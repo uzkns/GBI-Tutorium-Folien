@@ -278,7 +278,7 @@ Wie sehen Wörter aus den Sprachen aus?\\
 
 \begin{KITexampleblock}{Definition}
 	\begin{itemize}
-		\item Seien $F_1, F_2$ formale Sprachen über $A$, so ist das Produkt $L_1 * L_2$ = \{$w_1 w_2 | w_1 \in L_1 \wedge w_2 \in L_2 $\}
+		\item Seien $L_1, L_2$ formale Sprachen über $A$, so ist das Produkt $L_1 * L_2$ = \{$w_1 w_2 | w_1 \in L_1 \wedge w_2 \in L_2 $\}
 	\end{itemize}
 	\end{KITexampleblock}\\
 \ \\
@@ -298,7 +298,7 @@ Zum Beispiel mit $L_1$ = \{a, aa, ab\}, $L_2$ = \{b, ba, bb\}:\\
 
 \begin{KITexampleblock}{Definition}
 	\begin{itemize}
-		\item Sei $F_1$ formale Sprache über $A$, so ist die Potenz $L_1^n$ die $n$-fache Verkettung von $L_1$ mit sich selbst
+		\item Sei $L_1$ formale Sprache über $A$, so ist die Potenz $L_1^n$ die $n$-fache Verkettung von $L_1$ mit sich selbst
 	\end{itemize}
 	\end{KITexampleblock}\\
 \ \\
@@ -317,7 +317,7 @@ Zum Beispiel mit $L_1$ = \{a, b\}
 
 \begin{KITexampleblock}{Definition}
 	\begin{itemize}
-		\item Sei $F$ formale Sprache über $A$, so ist $F^* = \bigcup\limits_{i \in \mathbb{N_0}} L^i$ der Konkatenationsabschluss von $F$
+		\item Sei $F$ formale Sprache über $A$, so ist $F^* = \bigcup\limits_{i \in \mathbb{N_0}} F^i$ der Konkatenationsabschluss von $F$
 	\end{itemize}
 	\end{KITexampleblock}\\
 \ \\
@@ -331,11 +331,11 @@ Jede unendlich häufige Konkatenation von Wörtern aus $F$ liegt in $F^*$.
 
 \begin{KITexampleblock}{Definition}
 	\begin{itemize}
-		\item Sei $F$ formale Sprache über $A$, so ist $F^+ = \bigcup\limits_{i \in \mathbb{N_+}} L^i$ der  $\epsilon$-freie Konkatenationsabschluss von $F$
+		\item Sei $F$ formale Sprache über $A$, so ist $F^+ = \bigcup\limits_{i \in \mathbb{N_+}} F^i$ der  $\epsilon$-freie Konkatenationsabschluss von $F$
 	\end{itemize}
 	\end{KITexampleblock}\\
 \ \\
-Selbes wie $L^*$, nur ohne $L^0= \{ \epsilon \}$
+Selbes wie $F^*$, nur ohne $F^0= \{ \epsilon \}$
 \end{frame}
 
 
