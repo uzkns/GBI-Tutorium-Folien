@@ -1,0 +1,386 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 17, \#5}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+%Speicher
+\begin{frame}
+\frametitle{Speicher}
+Man kann sich den Speicher als eine Art Tabelle vorstellen. Die linke Spalte sind die Adressen, rechte Spalte die Daten an der jeweiligen Adresse.\\
+Bei einer Tabelle wird immer nur ein Zustand gespeichert, nicht eine "Referenz" auf die Tabelle.
+\ \\
+Bsp: Speicher $m_0$
+\begin{tabular}{c|c}
+Stelle & Wert \\ \hline
+00 & 010 \\
+01 & 000 \\
+10 & 111 \\
+11 & 100 \\
+\end{tabular}
+\end{frame}
+
+
+%Schreiben in den Speicher
+\begin{frame}
+\frametitle{Speicheroperationen: Schreiben}
+Schreiben in den Speicher mit:\\
+
+\begin{KITinfoblock}{Definition}
+	\begin{itemize}
+		\item $memwrite: Val^{Adr} x Adr x Val \rightarrow Val^{Adr}.$\\
+		\begin{itemize}
+			\item $(m, a, v) \mapsto m'$
+		\end{itemize}
+	\end{itemize}
+	\end{KITinfoblock}
+\ \\
+\ \\
+Dies schreibt den Wert \textbf{v} an Adresse \textbf{a} von Speichertabellenzustand \textbf{m} und gibt den veränderten Zustand \textbf{m'} zurück.
+\end{frame}
+
+
+%Lesen aus dem Speicher
+\begin{frame}
+\frametitle{Speicheroperationen: Lesen}
+Lesen aus dem Speicher mit:\\
+
+\begin{KITinfoblock}{Definition}
+	\begin{itemize}
+		\item $memread: Val^{Adr} x Adr \rightarrow Val$\\
+		\begin{itemize}
+			\item $(m, a) \mapsto m(a)$
+		\end{itemize}
+	\end{itemize}
+	\end{KITinfoblock}
+\ \\
+\ \\
+Dies liest aus der Adresse \textbf{a} von Zustand \textbf{m} aus und gibt diesen Wert zurück.
+\end{frame}
+
+
+%Beispiel
+\begin{frame}
+\frametitle{Speicheroperationen: Verkettung}
+Da die Operationen einen Rückgabewert haben, können wir sie Anstelle von konkreten Werten in anderen Operationen einsetzen.\\
+\ \\
+Beispiel: Wert aus Stelle 00 auslesen und in 01 einsetzen.\\
+\ \\
+\ \\
+$m_1$:
+\begin{tabular}{c|c}
+Stelle & Wert \\ \hline
+00 & 010 \\
+01 & 000 \\
+10 & 111 \\
+11 & 100 \\
+\end{tabular}
+\end{frame}
+
+
+%Aufgabe
+\begin{frame}
+\frametitle{Speicher: Aufgabe}
+Wie sieht $m_3$ nach der folgenden verketteten Operation auf Tabelle $m_2$ aus?\\
+\ \\
+\begin{itemize}
+	\item $m_3 = memwrite(m_2, 11, memread(memwrite(m_2, 10, 000), 00))$
+\end{itemize}
+\ \\
+\ \\
+$m_2$:
+\begin{tabular}{c|c}
+Stelle & Wert \\ \hline
+00 & 010 \\
+01 & 000 \\
+10 & 111 \\
+11 & 100 \\
+\end{tabular}
+\end{frame}
+
+
+%LÖSUNG%
+\begin{frame}
+\frametitle{Speicher: Lösung}
+Wie sieht $m_3$ nach der folgenden verketteten Operation auf Tabelle $m_2$ aus?\\
+\ \\
+\begin{itemize}
+	\item $m_3 = memwrite(m_2, 11, memread(memwrite(m_2, 10, 000), 00))$
+\end{itemize}
+\ \\
+\ \\
+$m_3$:
+\begin{tabular}{c|c}
+Stelle & Wert \\ \hline
+00 & 010 \\
+01 & 000 \\
+10 & 111 \\
+11 & 010 \\
+\end{tabular}
+\end{frame}
+
+
+%MIMA Aufbau%
+\begin{frame}
+\frametitle{Die MIMA: Aufbau}
+\begin{itemize}
+\item Steuerwerk
+\begin{itemize}
+	\item Holt Befehle aus dem Speicher, decodiert sie und steuert die Ausführung
+\end{itemize}
+\item Rechenwerk
+\begin{itemize}
+	\item Führt arithmetische/logische Operationen aus
+\end{itemize}
+\item Speicher
+\begin{itemize}
+	\item Speichert Daten an Adressen, besteht aus Programm- und Datenspeicher
+	\item Adressen 20Bit, Werte 24Bit 
+\end{itemize}
+\item Register
+\begin{itemize}
+	\item Speichern je ein Wort oder eine Adresse (20/24Bit)
+\end{itemize}
+\item Bus
+\begin{itemize}
+	\item Verbindet die Komponenten
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%ALU
+\begin{frame}
+\frametitle{Die MIMA: ALU}
+Führt die vom Steuerwerk decodierten Befehle aus (logisch oder arithmetisch).\\
+\ \\
+\begin{itemize}
+	\item X, Y: Eingabewerte
+	\item Z: Ausgabe der verarbeiteten Werte
+\end{itemize}
+\end{frame}
+
+
+%ALU Operationen
+\begin{frame}
+\frametitle{Die MIMA: ALU-Operationen}
+Bitweise Operationen der ALU:.\\
+\ \\
+\begin{tabular}{c|c}
+Name & Operation in Worten \\ \hline
+ADD & Zahl 1 + Zahl 2 \\
+AND & 1 $\Leftrightarrow$ beide Eingabwerte 1 sind (logische $\wedge$)\\
+OR & 1, wenn min. 1 wert 1 ist (logisches $\vee$)\\
+NOT & Jeder wert wird invertiert (Negierung) \\
+XOR & 1 wenn genau ein Wert 1 ist (exclusive or)\\
+\end{tabular}
+\end{frame}
+
+
+%Register%
+\begin{frame}
+\frametitle{Die MIMA: Register}
+\begin{itemize}
+	\item Akku: Akkumulator (Zwischenspeicher)
+	\item X, Y: ALU-Operanden
+	\item Z: ALU-Ergebnis
+	\item EINS: Die Konstante 1
+	\item IAR: Instruktionsadressreg., Speichert den Speicherwert des nächsten Befehls
+	\item IR: Instruktionsreg., Speichert die derzeitige Instruktion
+	\item SAR: Speicheradressreg., (write-only) ruft im Speicher seinen wert auf
+	\item SDR: Speicherdatenreg., Wert$\rightarrow$Speicher oder Speicher$\rightarrow$Wert
+\end{itemize}
+
+\end{frame}
+
+%Befehle%
+\begin{frame}
+\frametitle{Die MIMA: Befehle}
+\begin{itemize}
+	\item Maschinenbefehle/Assemblersprache: Rechen- und Sprungbefehle
+	\item Mikrobefehle: Bitfolgen, die an das Steuerwerk gesendet werden
+\end{itemize}
+\ \\
+Die Mikrobefehle werden in 7+ Takten abgearbeitet. Wie lange ein Takt (bzw. wann der nächste Takt beginnt) steuert ein Taktquarz im Steuerwerk.
+\end{frame}
+
+
+%Befehle in ASM%
+\begin{frame}
+\frametitle{Die MIMA: Befehle}
+Auf einer Extra-PDF im ILIAS.\\
+\ \\
+\begin{itemize}
+	\item Die Befehle werden aufsteigend durchnummeriert und dann abgearbeitet
+	\item Alle Werte immer in binär aufschreiben!
+	\item Es ist nicht möglich mehr als 20Bit lange Worte zu laden und es ist auch nicht möglich negative Zahlen zu laden
+	\item Kommentare werden im Format \emph{;<Kommentar>} geschrieben
+	\item Jedes Assemblerprogramm endet mit einem \textit{HALT} (Punktabzug!)
+\end{itemize}
+\end{frame}
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Was tut das folgende Programm?\\
+\ \\
+\qquad LDC 1 \\
+\qquad STV 011 \\
+\qquad LDV 010 \\
+\qquad NOT \\
+\qquad ADD 011 \\
+\qquad ADD 001 \\
+\qquad JMN m1 \\
+\qquad LDC 1 \\
+\qquad STV 111 \textit{;result}\\
+\qquad JMP m2 \\
+m1: LDC 0 \\
+\qquad STV 111 \textit{;result}\\
+m2: HALT
+\end{frame}
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Es zieht den Wert an Stelle $010$ von dem An Wert $001$ ab, falls das Ergebnis positiv ist, speichert es $1$ in $111$, sonst $0$: \\
+Anders: \\
+\ \\
+$pos(x,y) = \left\{
+\begin{array}{ll}
+1 & \textrm{wenn } x-y \geq 0 \\
+0 & \, \textrm{wenn } x-y < 0 \\
+\end{array}
+\right. $
+\end{frame}
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Schreibe ein Programm, dass den Wert an Adresse 001 verdreifacht.
+\end{frame}
+
+
+%LÖSUNG%
+\begin{frame}
+\frametitle{Die MIMA: Lösung}
+Schreibe ein Programm, dass den Wert an Adresse 001 verdreifacht.\\
+\ \\
+LDV 001 \\
+ADD 001 \\
+ADD 001 \\
+STV 001 \\
+HALT.
+\end{frame}
+
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Schreibe ein Programm dass ein ganzzahliges $x$ aus der Stelle 111 lädt, $-|x|$ bildet und das Ergbnis wieder in 11 speichert.\\
+\end{frame}
+
+
+%LÖSUNG%
+\begin{frame}
+\frametitle{Die MIMA: Lösung}
+Schreibe ein Programm dass ein ganzzahliges $x$ aus der Stelle 111 lädt, $-|x|$ bildet und das Ergbnis wieder in 11 speichert.\\
+\ \\
+\qquad LDV 001 \\
+\qquad JMN m1 \\
+\qquad NOT \\
+\qquad ADD EINS \\
+\qquad STV 001 \\
+m1: HALT \\
+
+\end{frame}
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Realisiert die Funktion: \\
+\ \\
+$max(a, b) = \left\{
+\begin{array}{ll}
+b & b \geq a \\
+a & \, b < a \\
+\end{array}
+\right. $ \\
+\ \\
+\ \\
+Wobei $a$ in 001 steht, $b$ in 010 und das Ergebnis in beide Speicherplätze (001,010) geschrieben werden soll.
+\end{frame}
+
+
+%LÖSUNG%
+\begin{frame}
+\frametitle{Die MIMA: Lösung}
+\qquad LDV 001 \\
+\qquad NOT \\
+\qquad ADD EINS \\
+\qquad ADD 010 \\
+\qquad JMN m1 \\
+\qquad LDV 010 \\
+\qquad STV 001 \\
+\qquad JMP m2 \\
+m1: LDV 001 \\
+\qquad STV 010 \\
+m2: HALT. \\
+\end{frame}
+
+
+
+
+
+\end{document}
