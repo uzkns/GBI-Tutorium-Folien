@@ -1,0 +1,311 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{{images/}}
+
+% -----------------------------------------------------------------------------
+
+\usetheme{KIT}
+
+\setbeamercovered{transparent}
+%\setbeamertemplate{enumerate items}[ball]
+
+\newenvironment<>{KITtestblock}[2][]
+{\begin{KITcolblock}<#1>{#2}{KITblack15}{KITblack50}}
+{\end{KITcolblock}}
+
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{beamerKITdefs}
+\usepackage{amsfonts}
+
+
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
+
+
+\title{Tutorium 17, \#6}
+\subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
+
+\author[Max Göckel]{Max Göckel}
+\institute{Institut für Theoretische Informatik - Grundbegriffe der Informatik}
+
+\TitleImage[width=\titleimagewd,height=\titleimageht]{titel}
+
+\KITinstitute{Institut f\"ur Theoretische Informatik}
+\KITfaculty{Fakult\"at f\"ur Informatik}
+
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\setlength\textheight{7cm} %required for correct vertical alignment, if [t] is not used as documentclass parameter
+
+
+% title frame
+\begin{frame}
+
+\maketitle
+\end{frame}
+
+
+%Aufgabe%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Beschreibt die folgenden Befehle.\\
+\ \\
+JMP a\\
+LDV a\\
+HALT\\
+ADD a\\
+\end{frame}
+
+
+%LÖSUNG%
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Beschreibt die folgenden Befehle.\\
+\ \\
+JMP a: Springt zum Befehl an Stelle a (oder in GBI: Mit Markierung a)\\
+LDV a: Lädt den Wert an Adresse a in den Akku\\
+HALT: Stoppt die MIMA\\
+ADD a: Addiert den Wert an Adresse a auf den Akku drauf (Ergebnis landet wieder im Akku)\\
+\end{frame}
+
+\begin{frame}
+\frametitle{Wiederholung}
+Wir kennen schon: \\
+\begin{itemize}
+	\item $x-y$
+	\item $x$ div $2$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Erinnerung: div}
+\begin{itemize}
+\item adr1 $=$ adr1 div $2$:\\
+\ \\
+\begin{tabular}{lll}
+	&LDV& EINS\\
+	&NOT&\\
+	&AND& adr1\\
+	&RAR&\\
+	&STV& adr1\\
+	&HALT&\\
+\end{tabular}\\
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Erinnerung: Minus}
+\begin{itemize}
+\item adr3 $=$ adr1 $-$ adr2:\\
+\ \\
+\begin{tabular}{lll}
+&LDV&adr2\\
+&NOT&\\
+&ADD&EINS\\
+&ADD&adr1\\
+&STV&adr3\\
+&HALT&\\
+\end{tabular}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Aufgabe}
+Was macht folgendes Programm?\\
+\begin{minipage}{0.45\textwidth}
+	\scalebox{0.65}{
+		\begin{tabular}{r|lll}
+			Zeilen & Code &  & \\
+			\hline
+			1 && LDC & 4 \\
+			2 && STV & adr0 \\
+			3 && ADD & EINS \\
+			4 && STV & adr1\\
+			5 && ADD & EINS\\
+			6 && STV & adr2 \\
+			7 && LDC & 0\\
+			8 && STIV & adr0\\
+			9 && ADD & EINS\\
+			10 && STIV & adr1\\
+			11 &$m1:$& LDIV & adr1\\
+			12 && STV & adr3\\
+			13 && LDIV & adr0\\
+			14 && ADD & adr3\\
+			15 && STIV & adr2\\
+			16 && LDV & adr0\\
+			17 && ADD & EINS\\
+			18 && STV & adr0\\
+			19 && ADD & EINS\\
+			20 && STV & adr1\\
+			21 && ADD & EINS\\
+			22 && STV & adr2\\
+			23 && JMP & m1\\
+			
+		\end{tabular}
+	}
+\end{minipage}
+\begin{minipage}{0.50\textwidth}
+	\scalebox{0.65}{Der Speicher hat folgende Form:}
+	\ \\
+	\ \\
+	\scalebox{0.65}{
+		\begin{tabular}{l|l}
+			Adresse & Wert\\ 
+			\hline
+			0 aka adr0 & ? \\
+			1 aka adr1 & ? \\
+			2 aka adr2 & ? \\
+			3 aka adr3 & ? \\
+			4 & ? \\
+			5 & ? \\
+			6 & ? \\
+			\vdots & \vdots\\
+		\end{tabular}
+	}\\
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Aufgabe}
+
+Schreibe ein Programm dass $z = x$ mod $y$ ausführt.\\
+Dabei:
+\begin{itemize}
+	\item x = Wert an Adresse adr1
+	\item y = Wert an Adresse adr2
+	\item z = Wert an Adresse adr3
+	\item x aus $\mathbb{N}_0$
+	\item y aus $\mathbb{N}_+$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lösung}
+
+Schreibe ein Programm dass $z = x$ mod $y$ ausführt.\\
+\ \\
+\qquad LDV adr1 \\
+\qquad STV adr3 \\
+m1: LDV adr2 \\
+\qquad NOT \\
+\qquad ADD EINS \\
+\qquad ADD adr3 \\
+\qquad JMN m0 \\
+\qquad STV adr3 \\
+\qquad JMP m1 \\
+m0: HALT
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Aufgabe}
+
+Schreibe ein Programm dass $z = x$ div $y$ ausführt.\\
+Dabei:
+\begin{itemize}
+	\item x = Wert an Adresse adr1
+	\item y = Wert an Adresse adr2
+	\item z = Wert an Adresse adr3
+	\item x aus $\mathbb{N}_0$
+	\item y aus $\mathbb{N}_+$
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Aufgabe}
+
+Schreibe ein Programm dass $z = x$ div $y$ ausführt.\\
+{\small \qquad LDC 0 \\
+	\qquad STV counter \\
+	\qquad LDV adr1 \\
+	\qquad STV rest \\
+	m1: LDV adr2 \\
+	\qquad NOT \\
+	\qquad ADD EINS \\
+	\qquad ADD rest \\
+	\qquad JMN m2 \\
+	\qquad STV rest \\
+	\qquad LDV counter \\
+	\qquad ADD EINS \\
+	\qquad STV counter \\
+	\qquad JMP m1 \\
+	m2: LDV counter \\
+	\qquad STV adr3 \\
+	\qquad HALT \\
+}
+\end{frame}
+
+
+
+
+
+
+%Aufgabe
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+An Speicherstelle adr1 steht ein Wert $x \in \mathbb{N}_+$.\\
+\ \\
+Schreibe ein Programm, dass den Wert an adr2 $x$-mal multipliziert (adr2 $\cdot$ x)
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+\frametitle{Die MIMA: Aufgabe}
+Schreibe ein Programm, dass den Wert an adr2 $x$-mal multipliziert:\\
+\qquad LDC 0 \\
+\qquad NOT \\
+\qquad STV adr3 \textit{;-1 an adr3} \\
+\qquad LDV adr2 \textit{;Wert von adr2 abspeichern} \\
+\qquad STV adr4 \\
+m1: LDV adr1 \\
+\qquad ADD adr3 \\
+\qquad STV adr1 \textit{;adr1 - 1 rechnen und speichern} \\
+\qquad LDV adr2 \\
+\qquad ADD adr4 \\
+\qquad STV adr2 \textit{;adr2 + adr4 rechnen und speichern} \\
+\qquad LDV adr3 \\
+\qquad JMN m2 \\
+\qquad JMP m1 \\
+m2: HALT
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Die MIMA: Befehle}
+LDC c - lädt Konstante c in den Akku \\
+LDV a - Lädt Wert an Stelle a in den Akku \\
+STV a - speicher Wert vom Akku in Stelle a \\
+ADD a - Addiert Wert an Stelle a auf den Wert im Akku drauf (Ergebn. $\rightarrow$ Akku) \\
+AND a - VerUNDet Wert v.St. a und Akku $\rightarrow$ Akku \\
+OR a - VerODERt Wert v.St. a und Akku $\rightarrow$ Akku \\
+XOR a - VerXORt Wert v.St. a und Akku $\rightarrow$ Akku \\
+EQL a - Falls Akku = Wert a.St. a $\rightarrow$ Akku -1 in Akku, sonst 0 \\
+JMP a - Springt zum Befehl mit Marker a \\
+JMN a - Springt zum Befehl a wenn Akku < 0 \\
+HALT - Endet die Auführung der MIMA \\
+NOT - Invertiert den Akku (0 $\rightarrow$ 1, 1 $\rightarrow$ 0) \\
+RAR - Rotiert den Akku um eins nach rechts\\
+\ \\
+Der Wert des Akku wird immer überschreiben wenn man neue Werte lädt, also Werte die man mehrfach braucht zwischenspeichern (STV).
+\end{frame}
+
+
+
+
+\end{document}
