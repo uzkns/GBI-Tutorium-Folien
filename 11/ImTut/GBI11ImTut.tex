@@ -30,7 +30,7 @@
 \pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
 
 
-\title{Tutorium 42, \#11}
+\title{Tutorium 17, \#11}
 \subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
 
 \author[Max Göckel]{Max Göckel}
@@ -64,12 +64,12 @@ Um Algorithmen zu vergleichen und einzuordnen gibt es verschiedene Schranken: \\
 		\item $\{ g(n) | \exists c \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : g(n) \leq c \cdot f(n) \}$
 	\end{itemize}
 
-	\item Obere Schranke $\Omega$ (Omega): In $\Omega ( f(n) )$ sind alle Funktionen die schneller oder gleich schnell wie f wachsen.
+	\item Untere Schranke $\Omega$ (Omega): In $\Omega ( f(n) )$ sind alle Funktionen die schneller oder gleich schnell wie f wachsen.
 	\begin{itemize}
 		\item $\{ g(n) | \exists c \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : g(n) \geq c \cdot f(n) \}$
 	\end{itemize}
 
-	\item Obere Schranke $\Theta$ (Theta): In $\Theta ( f(n) )$ sind alle Funktionen die genau gleich schnell wie f wachsen.
+	\item Mittlere Schranke $\Theta$ (Theta): In $\Theta ( f(n) )$ sind alle Funktionen die genau gleich schnell wie f wachsen.
 	\begin{itemize}
 		\item $\{ g(n) | \exists c_1, c_2 \in \mathbb{R}_+ : \exists  n_0 \in \mathbb{N}_0 : \forall n \geq n_0 : c_1 f(n) \leq g(n) \leq c_2 f(n) \}$
 		\item $O( f(n) ) \cap \Omega( f(n) )$
@@ -88,19 +88,19 @@ Finde passende $c$, $n_0$ um das Laufzeitverhalten von $f$ und $g$ zu vergleiche
 \end{frame}
 
 
-%Besipiel Lösung
+%Beispiel Lösung
 \begin{frame}
   \frametitle{O-Kalkül: Beispiel}
 Sei $f(n) = \Pi \cdot n^{10}$ und $g(n) = \frac{1}{e^9} \cdot n^{10}$.\\
 \ \\
 \begin{itemize}
-	\item $f(n) = \Pi n^{10} \leq ( e^9 \Pi ) \cdot \frac{1}{e^9} n^{10} = e^9 \Pi = g(n)$ ab $n_0 = 1$
+	\item $f(n) = \Pi n^{10} \leq ( e^9 \Pi ) \cdot \frac{1}{e^9} n^{10} = e^9 \Pi \cdot g(n)$
 	\begin{itemize}
-		\item $f(n) \in O( g(n) )$
+		\item $f(n) \in O( g(n) )$ mit $n_0 = 1$ und $c = e^9 \Pi$
 	\end{itemize}
-	\item $g(n) = \frac{1}{e^9} \leq n^{10} \leq \Pi n^10 = c \cdot f(n)$
+	\item $g(n) = \frac{1}{e^9} \cdot n^{10} \leq n^{10} \leq \Pi n^{10} = 1 \cdot f(n)$
 	\begin{itemize}
-		\item $g(n) \in O( f(n) )$
+		\item $g(n) \in O( f(n) )$ mit $n_0 = 1$ und $c=1$
 	\end{itemize}
 \end{itemize}
 \ \\
@@ -131,6 +131,21 @@ $T(n) = a \cdot T(\frac{n}{b}) + f(n)$.
 \end{frame}
 
 
+
+\begin{frame}
+\frametitle{Mastertheorem}
+$T(n) = a \cdot T(\frac{n}{b}) + f(n)$. \\
+\ \\
+\begin{itemize}
+	\item $a$: Anzahl der Teilprobleme
+	\item $\frac{n}{b}$: Größe der Teilprobleme
+	\item $f(n)$: Von $T(n)$ unabhängige Funktion zur Kombination der Teilprobleme
+\end{itemize}
+
+Bsp.: $T_1(n) = a \cdot T_1(\frac{n}{10}) + 3n^2$
+\end{frame}
+
+
 %Mastertheorem Fälle
 \begin{frame}
   \frametitle{Mastertheorem: Fälle}
@@ -138,8 +153,8 @@ Bei der Laufzeit der Form $T(n) = a \cdot T(\frac{n}{b}) + f(n)$ gibt es 3 Fäll
 \ \\
 \begin{enumerate}
 	\item Ist $f(n) \in O( n^{{log}_{b}a - \epsilon} )$ für ein $\epsilon > 0 \Rightarrow T(n) \in \Theta( n^{{log}_{b} a} )$
-	\item Ist $f(n) \in \Theta( n^{{log}_b a} ) \Rightarrow T(n) \in \Theta( n^{{log}_b a} \cdot {log} n )$
-	\item Ist $f(n) \in \Omega( n^{{log}_b a+\epsilon} )$ für ein $\epsilon > 0$ und $\exists d \in (0,1)$, sodass für ein großes n gilt: $a \cdot f(\frac{n}{b}) \leq d f(n) \Rightarrow T(n) \in \Theta( f(n) )$
+	\item Ist $f(n) \in \Theta( n^{{log}_b a} ) \Rightarrow T(n) \in \Theta( n^{{log}_b a} \cdot {log}(n) )$
+	\item Ist $f(n) \in \Omega( n^{{log}_b a+\epsilon} )$ für ein $\epsilon > 0$ und $\exists d \in (0,1)$, sodass für ein großes $n$ gilt: $a \cdot f(\frac{n}{b}) \leq d \cdot f(n) \Rightarrow T(n) \in \Theta( f(n) )$
 \end{enumerate}
 \end{frame}
 
@@ -160,7 +175,7 @@ Bei der Laufzeit der Form $T(n) = a \cdot T(\frac{n}{b}) + f(n)$ gibt es 3 Fäll
   \frametitle{Mastertheorem: Lösung}
 \begin{enumerate}
 	\item $a = 2, b = 2, f(n) = 10n$; ${log}_b a = 1$; $f(n) = 10n \in \Theta(n^1) \Rightarrow T(n) \in \Theta(n \cdot log n)$
-	\item  $a = 8, b = 2, f(n) = 20n^2$;  ${log}_b a = 3$; $f(n) = 20n^2 \in O( n^{log}_b a-\epsilon ) = O( n^{3-\epsilon} )$ für $\epsilon = \frac{1}{2} \Rightarrow T(n) \in \Theta( n^3 )$
+	\item  $a = 8, b = 2, f(n) = 20n^2$;  ${log}_b a = 3$; $f(n) = 20n^2 \in O( n^{{log}_b a-\epsilon} ) = O( n^{3-\epsilon} )$ für $\epsilon = \frac{1}{2} \Rightarrow T(n) \in \Theta( n^3 )$
 \end{enumerate}
 \end{frame}
 
