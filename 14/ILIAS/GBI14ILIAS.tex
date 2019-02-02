@@ -30,7 +30,7 @@
 \pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}	%required to prevent color shifting withd transparent images
 
 
-\title{Tutorium 42, \#14}
+\title{Tutorium 17, \#14}
 \subtitle{Max Göckel-- \textit{uzkns@student.kit.edu}}
 
 \author[Max Göckel]{Max Göckel}
@@ -123,7 +123,6 @@ Vorgehen:
 	\item Fertig.
 \end{itemize}
 \ \\
-Gezeigt am Beispiel von Aufgabe 6.2. an der Tafel
 \end{frame}
 
 
@@ -199,61 +198,77 @@ Auf formalen Sprachen gibt es Produkte, Potenzen und Konkatenationsabschlüsse: 
 \end{frame}
 
 
-%Formale Sprachen
+%Mastertheorem
 \begin{frame}
-  \frametitle{Formale Sprachen: Operationen}
-Auf formalen Sprachen gibt es Produkte, Potenzen und Konkatenationsabschlüsse: \\
-\ \\
-\begin{itemize}
-	\item $L_1$, $L_2$ form. Sprachen, so ist $L_1 \cdot L_2 = \{ w_1 \cdot w_2 | w_1 \in L_1, w_2 \in L_2 \}$ also
-	\item $\{a, b\} \cdot \{c, d\} = \{ ac, ad, bc, bd \}$
-\end{itemize}
-
-\begin{itemize}
-	\item $L^0 = \{ \epsilon \}$ und
-	\item $\forall k \in \mathbb{N}_0 : L^{k+1} = L \cdot L^k$
-\end{itemize}
-
-\begin{itemize}
-	\item $L^* = \bigcup_{i \in \mathbb{N}_0} L^i$
-	\item Jedes Wort aus $L$ bel. oft mit jedem anderen Wort aus $L$ kombiniert
-\end{itemize}
+\frametitle{Mastertheorem}
+Das Mastertheorem ermöglicht Laufzeitabschätzungen für rekursive Algorithmen. \\
+Die Funktionen der Algorithmen müssen folgende Form besitzen, damit das Mastertheorem angewendet werden kann: \\
+$T(n) = a \cdot T(\frac{n}{b}) + f(n)$.
 \end{frame}
 
 
-%GBI Themen
 \begin{frame}
-  \frametitle{Klasusurthemen}
-Alle Themen aus GBI: \\
-\begin{columns}
-\begin{column}{0.5\textwidth}
+\frametitle{Mastertheorem}
+$T(n) = a \cdot T(\frac{n}{b}) + f(n)$. \\
+\ \\
 \begin{itemize}
-	\item Mengen
-	\item Relationen
-	\item Wörter
-	\item Formale Sprachen
-	\item Kontextfreie Grammatiken
-	\item Induktion
-	\item Aussagenlogik
-	\item Prädikatenlogik
-	\item Huffman
+\item $a$: Anzahl der Teilprobleme
+\item $\frac{n}{b}$: Größe der Teilprobleme
+\item $f(n)$: Von $T(n)$ unabhängige Funktion zur Kombination der Teilprobleme
 \end{itemize}
-\end{column}
-\begin{column}{0.5\textwidth}  %%<--- here
-    \begin{center}
-\begin{itemize}
-	\item Speicher
-	\item MIMA
-	\item Hoare-Kalkül
-	\item Graphen
-	\item O-Kalkül/Mastertheorem
-	\item Automaten
-	\item RegEx
-	\item Turingmaschinen
-\end{itemize}
-     \end{center}
-\end{column}
-\end{columns}
+
+Bsp.: $T_1(n) = a \cdot T_1(\frac{n}{10}) + 3n^2$
+\end{frame}
+
+
+%Mastertheorem Fälle
+\begin{frame}
+\frametitle{Mastertheorem: Fälle}
+Bei der Laufzeit der Form $T(n) = a \cdot T(\frac{n}{b}) + f(n)$ gibt es 3 Fälle:\\
+\ \\
+\begin{enumerate}
+\item Ist $f(n) \in O( n^{{log}_{b}a - \epsilon} )$ für ein $\epsilon > 0 \Rightarrow T(n) \in \Theta( n^{{log}_{b} a} )$
+\item Ist $f(n) \in \Theta( n^{{log}_b a} ) \Rightarrow T(n) \in \Theta( n^{{log}_b a} \cdot {log}(n) )$
+\item Ist $f(n) \in \Omega( n^{{log}_b a+\epsilon} )$ für ein $\epsilon > 0$ und $\exists d \in (0,1)$, sodass für ein großes $n$ gilt: $a \cdot f(\frac{n}{b}) \leq d \cdot f(n) \Rightarrow T(n) \in \Theta( f(n) )$
+\end{enumerate}
+\end{frame}
+
+
+%LÖSUNG
+\begin{frame}
+\frametitle{Mastertheorem: Beispiel}
+$4 \cdot T(\frac{n}{4} + n^2$ \\
+\ \\
+${log}_b a = 1$, \\
+$f(n) = n^2 \in \Omega( n^{{log}_b a+\epsilon} ) = \Omega( n^{1+\epsilon} )$, \\
+Für $\epsilon = \frac{1}{2}$. Es soll gelten $a f(\frac{n}{b}) \leq d f(n), d \in (0,1)$.\\
+\ \\
+$a f(\frac{n}{b}) = 4 f(\frac{n}{4}) = \frac{n^2}{4} \leq d n^2 = d f(n)$ mit $d = \frac{1}{4}$. \\
+$\Rightarrow T(n) \in \Theta(n^2)$
+
+\end{frame}
+
+
+%Vorgehen
+\begin{frame}
+\frametitle{Vollständige Induktion}
+Drei Schritte:\\
+\ \\
+\begin{enumerate}
+	\item Induktionsanfang (IA): Den kleinsten Wert nehmen und die Behauptung für diesen zeigen. Manchmal noch die Behauptung für den ersten Schritt zeigen.
+	\item Induktionsvoraussetzung: Die Behauptung <Behauptung> gilt für ein beliebiges aber festes $n \in \mathbb{N}_+$ (oder worüber man die Induktion anwendet).
+	\item Induktionsschritt (IS): Für alle $n$ ein $(n+1)$ einsetzen und so lange Umformen bis der Ursprungsterm (mit dem $n$) wieder auftaucht.
+\end{enumerate}
+\end{frame}
+
+
+
+%Vorgehen
+\begin{frame}
+\frametitle{Induktion}
+Bei der Induktion über kontextfreie Grammatiken ist oft $n$ die Länge des Wortes oder die Anzahl an Ableitungsschritten. \\
+\ \\
+Hierbei dann davon ausgehen das an einer Stelle ein Nichtterminalsymbol steht und jeden möglichen Ableitungsschritt erklären um die Behauptung für $(n+1)$ zu zeigen.
 \end{frame}
 
 
@@ -284,27 +299,68 @@ Die Operationen können auch verkettet werden. an jedem $Val^{Adr}$ kann $memwri
 \end{frame}
 
 
+%MIMA Aufbau%
+\begin{frame}
+\frametitle{Aufbau der MIMA}
+\begin{itemize}
+	\item Steuerwerk
+	\begin{itemize}
+		\item Holt Befehle aus dem Speicher, decodiert sie und steuert die Ausführung
+	\end{itemize}
+	\item Rechenwerk
+	\begin{itemize}
+		\item Führt arithmetische/logische Operationen aus
+	\end{itemize}
+	\item Speicher
+	\begin{itemize}
+		\item Speichert Daten an Adressen, besteht aus Programm- und Datenspeicher
+		\item Adressen 20Bit, Werte 24Bit 
+	\end{itemize}
+	\item Register
+	\begin{itemize}
+		\item Speichern je ein Wort oder eine Adresse (20/24Bit)
+	\end{itemize}
+	\item Bus
+	\begin{itemize}
+		\item Verbindet die Komponenten
+	\end{itemize}
+\end{itemize}
+\end{frame}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%GBI Themen
+\begin{frame}
+\frametitle{Klasusurthemen}
+Alle Themen aus GBI: \\
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item Mengen
+			\item Relationen
+			\item Wörter
+			\item Formale Sprachen
+			\item Kontextfreie Grammatiken
+			\item Induktion
+			\item Aussagenlogik
+			\item Prädikatenlogik
+			\item Huffman
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}  %%<--- here
+		\begin{center}
+			\begin{itemize}
+				\item Speicher
+				\item MIMA
+				\item Hoare-Kalkül
+				\item Graphen
+				\item O-Kalkül/Mastertheorem
+				\item Automaten
+				\item RegEx
+				\item Turingmaschinen
+			\end{itemize}
+		\end{center}
+	\end{column}
+\end{columns}
+\end{frame}
 
 \end{document}
